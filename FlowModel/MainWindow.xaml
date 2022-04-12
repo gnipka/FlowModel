@@ -4,80 +4,102 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlowModel"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Программный комплекс для исследования неизотермического течения аномально-вязких материалов" MinHeight="560" MinWidth="1070">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Menu Grid.Row="0">
-            <MenuItem Header="О проекте"/>
-        </Menu>
-        <TextBlock Grid.Row="1" FontWeight="Bold" Text="Входные параметры"/>
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition MaxWidth="245"/>
-                <ColumnDefinition MaxWidth="400" Width="335"/>
-                <ColumnDefinition MaxWidth="400" Width="240"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0">
+        <StackPanel>
+            <Border Margin="0 1 0 0" BorderThickness="1" BorderBrush="{DynamicResource PrimaryHueDarkBrush}">
+                <Menu Grid.Row="0" Style="{DynamicResource MaterialDesignMenu}">
+                    <MenuItem Header="О проекте" FontSize="14" Height="28"/>
+                </Menu>
+            </Border>
+            <Grid Margin="0 10 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="260" MaxWidth="300"/>
+                    <ColumnDefinition MinWidth="340" MaxWidth="400"/>
+                    <ColumnDefinition MinWidth="450"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" FontSize="18" FontFamily="{DynamicResource MaterialDesignFont}" FontWeight="Bold" Text="Входные параметры" Style="{DynamicResource MaterialDesignOverlineTextBlock}"/>
+                <TextBlock Grid.Column="1" FontSize="18" FontFamily="{DynamicResource MaterialDesignFont}" FontWeight="Bold" Text="Параметры математической модели" Style="{DynamicResource MaterialDesignOverlineTextBlock}"/>
+                <TextBlock Text="Выходные параметры" Grid.Column="2" FontSize="18" FontFamily="{DynamicResource MaterialDesignFont}" FontWeight="Bold"/>
+            </Grid>
 
-                <GroupBox Margin="0 5 0 0" Header="Геометрические параметры">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition MaxWidth="60"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Margin="0 5 0 0" Grid.Row="0" Grid.Column="0" Text="Ширина"/>
-                        <TextBox Margin="0 5 0 0" Grid.Row="0" Grid.Column="1"/>
-                        <TextBlock Grid.Row="0" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
-                        <TextBlock Margin="0 5 0 0" Grid.Row="1" Grid.Column="0" Text="Глубина"/>
-                        <TextBox Margin="0 5 0 0" Grid.Row="1" Grid.Column="1"/>
-                        <TextBlock Grid.Row="1" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
-                        <TextBlock Margin="0 5 0 0" Grid.Row="2" Grid.Column="0" Text="Длина"/>
-                        <TextBox Margin="0 5 0 0" Grid.Row="2" Grid.Column="1"/>
-                        <TextBlock Grid.Row="2" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
-                    </Grid>
-                </GroupBox>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="260" MaxWidth="300"/>
+                    <ColumnDefinition MinWidth="340" MaxWidth="400"/>
+                    <ColumnDefinition MinWidth="450"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="0 0 0 10">
 
-                <GroupBox Margin="0 5 0 0" Header="Параметры свойств материалов">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition MaxWidth="60"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Margin="0 5 0 0" Grid.Row="0" Grid.Column="0" Text="Плотность"/>
-                        <TextBox Margin="0 5 0 0" Grid.Row="0" Grid.Column="1"/>
-                        <TextBlock Grid.Row="0" Margin="5 5 0 0" Grid.Column="2" Text="кг/м^3"/>
-                        <TextBlock Margin="0 5 0 0" Grid.Row="1" Grid.Column="0" >
+                    <GroupBox Margin="0 5 0 0" Header="Геометрические параметры канала">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition MaxWidth="60"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Margin="0 5 0 0" Grid.Row="0" Grid.Column="0" Text="Ширина"/>
+                            <TextBox Margin="0 5 0 0" Grid.Row="0" Grid.Column="1"/>
+                            <TextBlock Grid.Row="0" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
+                            <TextBlock Margin="0 5 0 0" Grid.Row="1" Grid.Column="0" Text="Глубина"/>
+                            <TextBox Margin="0 5 0 0" Grid.Row="1" Grid.Column="1"/>
+                            <TextBlock Grid.Row="1" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
+                            <TextBlock Margin="0 5 0 0" Grid.Row="2" Grid.Column="0" Text="Длина"/>
+                            <TextBox Margin="0 5 0 0" Grid.Row="2" Grid.Column="1"/>
+                            <TextBlock Grid.Row="2" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Margin="0 0 0 0" Header="Параметры свойств материала">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition MaxWidth="60"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0" Margin="0 2 0 0" Text="Материал" Grid.Column="0"/>
+
+                            <ComboBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource MaterialDesignComboBox}">
+                                <ComboBoxItem Content="Материал 1" IsSelected="True"/>
+                                <ComboBoxItem Content="Материал 2"/>
+                                <ComboBoxItem Content="Материал 3"/>
+                            </ComboBox>
+
+                            <TextBlock Margin="0 5 0 0" Grid.Row="1" Grid.Column="0" Text="Плотность"/>
+                            <TextBox Margin="0 5 0 0" Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBlock Grid.Row="1" Margin="5 5 0 0" Grid.Column="2" Text="кг/м^3"/>
+                            <TextBlock Margin="0 5 0 0" Grid.Row="2" Grid.Column="0" >
                             Удельная <LineBreak/> теплоемкость
-                        </TextBlock>
-                        <TextBox Height="18" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1"/>
-                        <TextBlock Grid.Row="1" Margin="5 12 0 0" Grid.Column="2" Text="Дж/(кг*С)"/>
-                        <TextBlock Margin="0 5 0 0" Grid.Row="2" Grid.Column="0">
+                            </TextBlock>
+                            <TextBox Height="18" Margin="0 5 0 0" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBlock Grid.Row="2" Margin="5 12 0 0" Grid.Column="2" Text="Дж/(кг*С)"/>
+                            <TextBlock Margin="0 5 0 0" Grid.Row="3" Grid.Column="0">
                             Температура <LineBreak/> плавления
-                        </TextBlock>
-                        <TextBox Height="18" Margin="0 5 0 0" Grid.Row="2" Grid.Column="1"/>
-                        <TextBlock Grid.Row="2" Margin="5 12 0 0" Grid.Column="2" Text="С"/>
-                    </Grid>
-                </GroupBox>
+                            </TextBlock>
+                            <TextBox Height="18" Margin="0 5 0 0" Grid.Row="3" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBlock Grid.Row="3" Margin="5 12 0 0" Grid.Column="2" Text="С"/>
+                        </Grid>
+                    </GroupBox>
 
-                <GroupBox Margin="0 5 0 0" Header="Режимные параметры процесса">
-                    <Grid>
+                    <TextBlock Margin="0 5 0 5" Grid.Column="1" FontSize="18" FontFamily="{DynamicResource MaterialDesignFont}" FontWeight="Bold" Text="Варьируемые параметры" Style="{DynamicResource MaterialDesignOverlineTextBlock}"/>
+
+                    <Grid Margin="7 0 0 0">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
@@ -99,76 +121,134 @@
                         <TextBox Height="18" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1"/>
                         <TextBlock Grid.Row="1" Margin="5 12 0 0" Grid.Column="2" Text="C"/>
                     </Grid>
-                </GroupBox>
-            </StackPanel>
+                </StackPanel>
 
-            <StackPanel Grid.Column="1">
-                <GroupBox Margin="0 5 0 0" Header="Параметры метода решения модели">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition MaxWidth="175"/>
-                            <ColumnDefinition MaxWidth="80"/>
-                            <ColumnDefinition MaxWidth="60"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Margin="0,5,3,0" Grid.Row="0" Grid.Column="0" >
-                            Шаг расчета по длине канала
-                        </TextBlock>
-                        <TextBox  Grid.Row="0" Grid.Column="1" Height="18" />
-                        <TextBlock Grid.Row="0" Margin="5 12 0 0" Grid.Column="2" Text="м"/>
-                    </Grid>
-                </GroupBox>
+                <StackPanel Grid.Column="1">
 
-                <GroupBox Margin="0 5 0 0" Header="Эмпирические коэффициенты">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition MaxWidth="175"/>
-                            <ColumnDefinition MaxWidth="80"/>
-                            <ColumnDefinition MaxWidth="65"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" >
-                            Коэффициент консистенции <LineBreak/> при температуре привидения
-                        </TextBlock>
-                        <TextBox Margin="0,12,0,0" Height="18" Grid.Row="0" Grid.Column="1"/>
-                        <TextBlock Grid.Row="0" Margin="5 15 0 0" Grid.Column="2" Text="Па*с^n"/>
+                    <GroupBox Margin="0 5 0 0" Header="Эмпирические коэффициенты математической модели">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition MaxWidth="175"/>
+                                <ColumnDefinition MaxWidth="80"/>
+                                <ColumnDefinition MaxWidth="65"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" >
+                            Коэффициент консистенции <LineBreak/> при температуре приведения
+                            </TextBlock>
+                            <TextBox Margin="0,12,0,0" Height="18" Grid.Row="0" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBlock Grid.Row="0" Margin="5 15 0 0" Grid.Column="2" Text="Па*с^n"/>
 
-                        <TextBlock Margin="0,5,0,0" Grid.Row="1" Grid.Column="0" >
+                            <TextBlock Margin="0,5,0,0" Grid.Row="1" Grid.Column="0" >
                             Температурный <LineBreak/> коэффициент вязкости
-                        </TextBlock>
-                        <TextBox Margin="0,12,0,0" Height="18" Grid.Row="1" Grid.Column="1"/>
-                        <TextBlock Grid.Row="1" Margin="5 15 0 0" Grid.Column="2" Text="1/C"/>
+                            </TextBlock>
+                            <TextBox Margin="0,12,0,0" Height="18" Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBlock Grid.Row="1" Margin="5 15 0 0" Grid.Column="2" Text="1/C"/>
 
-                        <TextBlock Margin="0,5,0,0" Grid.Row="2" Grid.Column="0" >
+                            <TextBlock Margin="0,5,0,0" Grid.Row="2" Grid.Column="0" >
                             Температура привидения
-                        </TextBlock>
-                        <TextBox Margin="0,5,0,0" Height="18" Grid.Row="2" Grid.Column="1"/>
-                        <TextBlock Grid.Row="2" Margin="5 5 0 0" Grid.Column="2" Text="C"/>
+                            </TextBlock>
+                            <TextBox Margin="0,5,0,0" Height="18" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBlock Grid.Row="2" Margin="5 5 0 0" Grid.Column="2" Text="C"/>
 
-                        <TextBlock Margin="0,5,0,0" Grid.Row="3" Grid.Column="0" >
+                            <TextBlock Margin="0,5,0,0" Grid.Row="3" Grid.Column="0" >
                             Индекс течения
-                        </TextBlock>
-                        <TextBox Margin="0,5,0,0" Height="18" Grid.Row="3" Grid.Column="1"/>
+                            </TextBlock>
+                            <TextBox Margin="0,5,0,0" Height="18" Grid.Row="3" Grid.Column="1" IsReadOnly="True"/>
 
-                        <TextBlock Margin="0,5,0,0" Grid.Row="4" Grid.Column="0" >
+                            <TextBlock Margin="0,5,0,0" Grid.Row="4" Grid.Column="0" >
                             Коэффициент теплоотдачи <LineBreak/> от крышки канала к материалу
-                        </TextBlock>
-                        <TextBox Margin="0,12,0,0" Height="18" Grid.Row="4" Grid.Column="1"/>
-                        <TextBlock Grid.Row="4" Margin="5 15 0 0" Grid.Column="2" Text="Вт/(м^2*C)"/>
+                            </TextBlock>
+                            <TextBox Margin="0,12,0,0" Height="18" Grid.Row="4" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBlock Grid.Row="4" Margin="5 15 0 0" Grid.Column="2" Text="Вт/(м^2*C)"/>
 
-                    </Grid>
-                </GroupBox>
+                        </Grid>
+                    </GroupBox>
 
+                    <GroupBox Header="Параметры метода решения модели">
 
-            </StackPanel>
-        </Grid>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition MaxWidth="175"/>
+                                <ColumnDefinition MaxWidth="80"/>
+                                <ColumnDefinition MaxWidth="60"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Margin="0,5,3,0" Grid.Row="0" Grid.Column="0" >
+                            Шаг расчета по длине канала
+                            </TextBlock>
+                            <TextBox  Grid.Row="0" Grid.Column="1" Height="18" />
+                            <TextBlock Grid.Row="0" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
+                        </Grid>
+
+                    </GroupBox>
+
+                    <Button Margin="10 16 10 0" Content="Расчет" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
+
+                    <Button Margin="10 16 10 0" Content="Сохранить отчет" Style="{DynamicResource MaterialDesignFlatLightBgButton}"/>
+
+                </StackPanel>
+
+                <StackPanel Grid.Column="2">
+                    <GroupBox Margin="0 5 0 0" Header="Критериальные показатели">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition MaxWidth="175"/>
+                                <ColumnDefinition MaxWidth="80"/>
+                                <ColumnDefinition MaxWidth="60"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Margin="0,5,3,0" Grid.Row="0" Grid.Column="0" >
+                            Производительность канала
+                            </TextBlock>
+                            <TextBox  Grid.Row="0" Grid.Column="1" Height="18" />
+                            <TextBlock Grid.Row="0" Margin="5 5 0 0" Grid.Column="2" Text="кг/ч"/>
+
+                            <TextBlock Margin="0,5,3,0" Grid.Row="1" Grid.Column="0" >
+                            Температура продукта
+                            </TextBlock>
+                            <TextBox  Grid.Row="1" Grid.Column="1" Height="18" />
+                            <TextBlock Grid.Row="1" Margin="5 5 0 0" Grid.Column="2" Text="С"/>
+
+                            <TextBlock Margin="0,5,3,0" Grid.Row="2" Grid.Column="0" >
+                            Вязкость продукта
+                            </TextBlock>
+                            <TextBox  Grid.Row="2" Grid.Column="1" Height="18" />
+                            <TextBlock Grid.Row="2" Margin="5 5 0 0" Grid.Column="2" Text="Па*с"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Header="Параметры состояния процесса">
+                        <DataGrid Margin="0 0 5 0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Координата по длине канала, м"/>
+                                <DataGridTextColumn Header="Температура, С"/>
+                                <DataGridTextColumn Header="Вязкость, Па*с"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                    <Button Margin="10 10 10 0" Content="Построить график" Style="{DynamicResource MaterialDesignFlatLightBgButton}"/>
+
+                </StackPanel>
+
+            </Grid>
+
+        </StackPanel>
+
     </Grid>
 </Window>
