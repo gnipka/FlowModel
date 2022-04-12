@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlowModel"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:col="clr-namespace:System.Collections;assembly=mscorlib" d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         mc:Ignorable="d"
@@ -48,13 +48,13 @@
                                 <ColumnDefinition MaxWidth="60"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Margin="0 5 0 0" Grid.Row="0" Grid.Column="0" Text="Ширина"/>
-                            <TextBox Margin="0 5 0 0" Grid.Row="0" Grid.Column="1"/>
+                            <TextBox Margin="0 5 0 0" Grid.Row="0" Text="{Binding GeometricParameters.Width,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
                             <TextBlock Grid.Row="0" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
                             <TextBlock Margin="0 5 0 0" Grid.Row="1" Grid.Column="0" Text="Глубина"/>
-                            <TextBox Margin="0 5 0 0" Grid.Row="1" Grid.Column="1"/>
+                            <TextBox Text="{Binding Path=GeometricParameters.Depth,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1"/>
                             <TextBlock Grid.Row="1" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
                             <TextBlock Margin="0 5 0 0" Grid.Row="2" Grid.Column="0" Text="Длина"/>
-                            <TextBox Margin="0 5 0 0" Grid.Row="2" Grid.Column="1"/>
+                            <TextBox Text="{Binding Path=GeometricParameters.Length,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" Grid.Row="2" Grid.Column="1"/>
                             <TextBlock Grid.Row="2" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
                         </Grid>
                     </GroupBox>
@@ -152,7 +152,7 @@
                             <TextBlock Grid.Row="1" Margin="5 15 0 0" Grid.Column="2" Text="1/C"/>
 
                             <TextBlock Margin="0,5,0,0" Grid.Row="2" Grid.Column="0" >
-                            Температура привидения
+                            Температура приведения
                             </TextBlock>
                             <TextBox Margin="0,5,0,0" Height="18" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
                             <TextBlock Grid.Row="2" Margin="5 5 0 0" Grid.Column="2" Text="C"/>
