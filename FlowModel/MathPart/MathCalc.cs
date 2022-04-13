@@ -1,10 +1,10 @@
 ﻿using FlowModel.Parameters;
-using FlowModel.InputData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FlowModel.OutputData;
 
 namespace FlowModel.MathPart
 {
@@ -25,8 +25,8 @@ namespace FlowModel.MathPart
             _VariableParameters = variableParameters;
         }
 
-        private InputParameter _InputParameter = new InputParameter();
-        public InputParameter InputData { get; set; }
+        private OutputParameter _InputParameter = new OutputParameter();
+        public OutputParameter InputData { get; set; }
 
         private double Square(double number) => number * number;
 
@@ -87,7 +87,7 @@ namespace FlowModel.MathPart
             _SecondPartCalc = _SpecificHeatFluxAlpha / (_MaterialProperties.Density * _MaterialProperties.HeatCapacity * _VolumeFlowRate);
         }
 
-        public void GetInputParameters()
+        public void GetOutputParameters()
         {
             double z = 0; //координата по длине канала
             int i = 0; // движение по массиву
@@ -100,8 +100,8 @@ namespace FlowModel.MathPart
             GetFirstPartCalc();
             GetSecondPartCalc();
 
-            _InputParameter = new InputParameter();
-            _InputParameter.ProcessStateParameters = new ProcessStateParameters[size];
+            _InputParameter = new OutputParameter();
+            _InputParameter.ProcessStateParameters = new ProcessStateParameters[size + 1];
 
             while(z <= _GeometricParameters.Length)
             {

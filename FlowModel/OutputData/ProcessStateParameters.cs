@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlowModel.InputData
+namespace FlowModel.OutputData
 {
     /// <summary>
     /// Выходные параметры состояния процесса

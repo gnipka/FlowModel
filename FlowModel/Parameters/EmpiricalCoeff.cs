@@ -29,7 +29,7 @@ namespace FlowModel.Parameters
         /// <summary>
         /// Индекс течения
         /// </summary>
-        public int CurrentIndex { get; set; }
+        public double CurrentIndex { get; set; }
 
         /// <summary>
         /// Коэффициент теплоотдачи от крышки канала к материалу
