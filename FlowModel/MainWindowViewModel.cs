@@ -4,6 +4,7 @@ using FlowModel.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,34 @@ namespace FlowModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
+        public MainWindowViewModel()
+        {
+            CalcMemory();
+        }
+
+        async void CalcMemory()
+        {
+            await Task.Run(() => {
+                while (true)
+                {
+                    string prcName = Process.GetCurrentProcess().ProcessName;
+                    var counter = new PerformanceCounter("Process", "Working Set - Private", prcName);
+                    MemoryParam = (int)(counter.RawValue / (1024* 1024));
+                    //MemoryParam = (int)System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / 1024;
+                }
+            });
+        }
+
+        private int _MemoryParam;
+        public int MemoryParam
+        {
+            get { return _MemoryParam; }
+            set
+            {
+                _MemoryParam = value;
+                OnPropertyChanged();
+            }
+        }
 
         #region [Input Parametrs]
         private GeometricParameters _GeometricParameters = new GeometricParameters { Depth=0.009, Length=4.5, Width=0.2};
@@ -87,6 +116,17 @@ namespace FlowModel
             }
         }
 
+        private string _Time;
+        public string Time
+        {
+            get { return _Time; }
+            set
+            {
+                _Time = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         #endregion
 
@@ -100,9 +140,10 @@ namespace FlowModel
                 {;
                     MathCalc calc = new MathCalc(EmpiricalCoeff, GeometricParameters, MaterialProperties, ParametersSolution, VariableParameters);
 
-                    calc.GetOutputParameters();
+                    calc.GetOutputParameters();                    
 
                     OutputParameter = calc.InputData;
+                    Time = Math.Round(OutputParameter.Time.TotalMilliseconds, 2).ToString();
                 });
             }
         }

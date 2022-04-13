@@ -12,9 +12,26 @@
     <Grid>
         <StackPanel>
             <Border Margin="0 1 0 0" BorderThickness="1" BorderBrush="{DynamicResource PrimaryHueDarkBrush}">
-                <Menu Grid.Row="0" Style="{DynamicResource MaterialDesignMenu}">
-                    <MenuItem Header="О проекте" FontSize="14" Height="28"/>
-                </Menu>
+                <Grid Grid.Row="0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition MinWidth="470" MaxWidth="1000"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition MinWidth="190"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Menu Grid.Column="0" Style="{DynamicResource MaterialDesignMenu}">
+                        <MenuItem Header="О проекте" FontSize="14" Height="28"/>
+                    </Menu>
+                    <TextBlock Grid.Column="1" Margin="0 5 0 0" FontSize="14" Height="28" Text="Время счета"/>
+                    <TextBox Text="{Binding Time}" Grid.Column="2" Width="40" FontSize="14" Height="28"/>
+                    <TextBlock Grid.Column="3" Text="мc" FontSize="14" Height="28" Margin="0 5 0 0"/>
+                    <TextBlock Grid.Column="4" Margin="0 5 0 0" FontSize="14" Height="28" Text="Объем оперативной памяти"/>
+                    <TextBox  Text="{Binding MemoryParam}" Width="40" FontSize="14" Height="28" Grid.Column="5"/>
+                    <TextBlock Text="Мб" FontSize="14" Height="28" Margin="0 5 0 0" Grid.Column="6"/>
+                </Grid>
             </Border>
             <Grid Margin="0 10 0 0">
                 <Grid.ColumnDefinitions>
@@ -48,13 +65,13 @@
                                 <ColumnDefinition MaxWidth="60"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Margin="0 5 0 0" Grid.Row="0" Grid.Column="0" Text="Ширина"/>
-                            <TextBox  Margin="0 5 0 0" Grid.Row="0" Text="{Binding GeometricParameters.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+                            <TextBox Height="22"  Margin="0 5 0 0" Grid.Row="0" Text="{Binding GeometricParameters.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
                             <TextBlock Grid.Row="0" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
                             <TextBlock Margin="0 5 0 0" Grid.Row="1" Grid.Column="0" Text="Глубина"/>
-                            <TextBox Text="{Binding GeometricParameters.Depth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1"/>
+                            <TextBox Height="22" Text="{Binding GeometricParameters.Depth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1"/>
                             <TextBlock Grid.Row="1" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
                             <TextBlock Margin="0 5 0 0" Grid.Row="2" Grid.Column="0" Text="Длина"/>
-                            <TextBox Text="{Binding GeometricParameters.Length, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" Grid.Row="2" Grid.Column="1"/>
+                            <TextBox Height="22" Text="{Binding GeometricParameters.Length, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" Grid.Row="2" Grid.Column="1"/>
                             <TextBlock Grid.Row="2" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
                         </Grid>
                     </GroupBox>
@@ -76,23 +93,21 @@
                             <TextBlock Grid.Row="0" Margin="0 2 0 0" Text="Материал" Grid.Column="0"/>
 
                             <ComboBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource MaterialDesignComboBox}">
-                                <ComboBoxItem Content="Материал 1" IsSelected="True"/>
-                                <ComboBoxItem Content="Материал 2"/>
-                                <ComboBoxItem Content="Материал 3"/>
+                                <ComboBoxItem Content="Полистирол" IsSelected="True"/>
                             </ComboBox>
 
                             <TextBlock Margin="0 5 0 0" Grid.Row="1" Grid.Column="0" Text="Плотность"/>
-                            <TextBox Text="{Binding MaterialProperties.Density, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBox Height="22" Text="{Binding MaterialProperties.Density, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
                             <TextBlock Grid.Row="1" Margin="5 5 0 0" Grid.Column="2" Text="кг/м^3"/>
                             <TextBlock Margin="0 5 0 0" Grid.Row="2" Grid.Column="0" >
                             Удельная <LineBreak/> теплоемкость
                             </TextBlock>
-                            <TextBox Text="{Binding MaterialProperties.HeatCapacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="18" Margin="0 5 0 0" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBox Height="22" Text="{Binding MaterialProperties.HeatCapacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
                             <TextBlock Grid.Row="2" Margin="5 12 0 0" Grid.Column="2" Text="Дж/(кг*С)"/>
                             <TextBlock Margin="0 5 0 0" Grid.Row="3" Grid.Column="0">
                             Температура <LineBreak/> плавления
                             </TextBlock>
-                            <TextBox Text="{Binding MaterialProperties.MeltingPoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="18" Margin="0 5 0 0" Grid.Row="3" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBox Height="22" Text="{Binding MaterialProperties.MeltingPoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" Grid.Row="3" Grid.Column="1" IsReadOnly="True"/>
                             <TextBlock Grid.Row="3" Margin="5 12 0 0" Grid.Column="2" Text="С"/>
                         </Grid>
                     </GroupBox>
@@ -113,7 +128,7 @@
                         <TextBlock Margin="0 5 0 0" Grid.Row="0" Grid.Column="0" >
                             Скорость <LineBreak/> крышки
                         </TextBlock>
-                        <TextBox Text="{Binding VariableParameters.CoverSpeed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="18" Margin="0 5 0 0" Grid.Row="0" Grid.Column="1"/>
+                        <TextBox Text="{Binding VariableParameters.CoverSpeed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="22" Margin="0 5 0 0" Grid.Row="0" Grid.Column="1"/>
                         <TextBlock Grid.Row="0" Margin="5 12 0 0" Grid.Column="2" Text="м/с"/>
                         <TextBlock Margin="0 5 0 0" Grid.Row="1" Grid.Column="0">
                             Температура <LineBreak/> крышки
@@ -142,19 +157,19 @@
                             <TextBlock Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" >
                             Коэффициент консистенции <LineBreak/> при температуре приведения
                             </TextBlock>
-                            <TextBox Text="{Binding EmpiricalCoeff.ConsistencyCoeff, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,12,0,0" Height="18" Grid.Row="0" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBox Text="{Binding EmpiricalCoeff.ConsistencyCoeff, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,12,0,0" Height="22" Grid.Row="0" Grid.Column="1" IsReadOnly="True"/>
                             <TextBlock Grid.Row="0" Margin="5 15 0 0" Grid.Column="2" Text="Па*с^n"/>
 
                             <TextBlock Margin="0,5,0,0" Grid.Row="1" Grid.Column="0" >
                             Температурный <LineBreak/> коэффициент вязкости
                             </TextBlock>
-                            <TextBox Text="{Binding EmpiricalCoeff.TemperatureCoeffViscosity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,12,0,0" Height="18" Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBox Text="{Binding EmpiricalCoeff.TemperatureCoeffViscosity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,12,0,0" Height="22" Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
                             <TextBlock Grid.Row="1" Margin="5 15 0 0" Grid.Column="2" Text="1/C"/>
 
                             <TextBlock Margin="0,5,0,0" Grid.Row="2" Grid.Column="0" >
                             Температура приведения
                             </TextBlock>
-                            <TextBox Text="{Binding EmpiricalCoeff.CastingTemperature, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" Height="18" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBox Text="{Binding EmpiricalCoeff.CastingTemperature, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" Height="22" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
                             <TextBlock Grid.Row="2" Margin="5 5 0 0" Grid.Column="2" Text="C"/>
 
                             <TextBlock Margin="0,5,0,0" Grid.Row="3" Grid.Column="0" >
@@ -165,7 +180,7 @@
                             <TextBlock Margin="0,5,0,0" Grid.Row="4" Grid.Column="0" >
                             Коэффициент теплоотдачи <LineBreak/> от крышки канала к материалу
                             </TextBlock>
-                            <TextBox Text="{Binding EmpiricalCoeff.HeatTransferCoeff, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,12,0,0" Height="18" Grid.Row="4" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBox Text="{Binding EmpiricalCoeff.HeatTransferCoeff, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,12,0,0" Height="22" Grid.Row="4" Grid.Column="1" IsReadOnly="True"/>
                             <TextBlock Grid.Row="4" Margin="5 15 0 0" Grid.Column="2" Text="Вт/(м^2*C)"/>
 
                         </Grid>
@@ -187,7 +202,7 @@
                             <TextBlock Margin="0,5,3,0" Grid.Row="0" Grid.Column="0" >
                             Шаг расчета по длине канала
                             </TextBlock>
-                            <TextBox Text="{Binding ParametersSolution.Step, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Height="18" />
+                            <TextBox Text="{Binding ParametersSolution.Step, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Height="22" />
                             <TextBlock Grid.Row="0" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
                         </Grid>
 
@@ -234,12 +249,8 @@
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Параметры состояния процесса">
-                        <DataGrid ItemsSource="{Binding OutputParameter.ProcessStateParameters}" Margin="0 0 5 0">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Координата по длине канала, м"/>
-                                <DataGridTextColumn Header="Температура, С"/>
-                                <DataGridTextColumn Header="Вязкость, Па*с"/>
-                            </DataGrid.Columns>
+                        <DataGrid ItemsSource="{Binding OutputParameter.ProcessStateParameters}" Margin="0 0 5 5" MaxHeight="230" GridLinesVisibility="Vertical" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible">
+
                         </DataGrid>
                     </GroupBox>
                     <Button Margin="10 10 10 0" Content="Построить график" Style="{DynamicResource MaterialDesignFlatLightBgButton}"/>

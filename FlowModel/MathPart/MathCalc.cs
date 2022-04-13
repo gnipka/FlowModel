@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FlowModel.OutputData;
+using System.Diagnostics;
 
 namespace FlowModel.MathPart
 {
@@ -40,7 +41,7 @@ namespace FlowModel.MathPart
         /// </summary>
         private void GetVolumeFlowRate()
         {
-            _VolumeFlowRate = (_GeometricParameters.Depth * _GeometricParameters.Width * _VariableParameters.CoverSpeed) / 2 * (0.125 * Square(_GeometricParameters.Depth / _GeometricParameters.Width) - 0.625 * _GeometricParameters.Depth / _GeometricParameters.Width + 1);
+            _VolumeFlowRate = ((_GeometricParameters.Depth * _GeometricParameters.Width * _VariableParameters.CoverSpeed) / 2) * (0.125 * Square(_GeometricParameters.Depth / _GeometricParameters.Width) -( 0.625 * _GeometricParameters.Depth / _GeometricParameters.Width) + 1);
         }
 
         /// <summary>
@@ -75,7 +76,7 @@ namespace FlowModel.MathPart
         private double _FirstPartCalc;
         private void GetFirstPartCalc()
         {
-            _FirstPartCalc = (_EmpiricalCoef.TemperatureCoeffViscosity * _SpecificHeatFluxGamma + _GeometricParameters.Width * _EmpiricalCoef.HeatTransferCoeff) / _EmpiricalCoef.TemperatureCoeffViscosity * _SpecificHeatFluxAlpha;
+            _FirstPartCalc = (_EmpiricalCoef.TemperatureCoeffViscosity * _SpecificHeatFluxGamma + _GeometricParameters.Width * _EmpiricalCoef.HeatTransferCoeff) / (_EmpiricalCoef.TemperatureCoeffViscosity * _SpecificHeatFluxAlpha);
         }
 
         /// <summary>
@@ -89,11 +90,13 @@ namespace FlowModel.MathPart
 
         public void GetOutputParameters()
         {
+            var sw = new Stopwatch();
             double z = 0; //координата по длине канала
             int i = 0; // движение по массиву
 
             int size = (int)(_GeometricParameters.Length / _ParametersSolution.Step);
 
+            sw.Start();
             GetVolumeFlowRate();
             GetSpecificHeatFluxAlpha();
             GetSpecificHeatFluxGamma();
@@ -103,15 +106,16 @@ namespace FlowModel.MathPart
             _InputParameter = new OutputParameter();
             _InputParameter.ProcessStateParameters = new ProcessStateParameters[size + 1];
 
-            while(z <= _GeometricParameters.Length)
+            while(Math.Round(z, 2) <= _GeometricParameters.Length)
+
             {
                 ProcessStateParameters processStateParameter = new ProcessStateParameters();
 
-                processStateParameter.Coordinate = z;
+                processStateParameter.Coordinate = Math.Round(z, 2);
 
-                processStateParameter.Temperature = _EmpiricalCoef.CastingTemperature + 1 / _EmpiricalCoef.TemperatureCoeffViscosity * Math.Log(_FirstPartCalc * (1 - Math.Exp(0 - _EmpiricalCoef.TemperatureCoeffViscosity * _SecondPartCalc * z)) + Math.Exp(_EmpiricalCoef.TemperatureCoeffViscosity * (_MaterialProperties.MeltingPoint - _EmpiricalCoef.CastingTemperature - _SecondPartCalc * z)));
+                processStateParameter.Temperature = Math.Round(_EmpiricalCoef.CastingTemperature + (1 / _EmpiricalCoef.TemperatureCoeffViscosity) * Math.Log(_FirstPartCalc * (1 - Math.Exp(0 - _EmpiricalCoef.TemperatureCoeffViscosity * _SecondPartCalc * z)) + Math.Exp(_EmpiricalCoef.TemperatureCoeffViscosity * (_MaterialProperties.MeltingPoint - _EmpiricalCoef.CastingTemperature - _SecondPartCalc * z))), 2);
 
-                processStateParameter.Viscosity = _EmpiricalCoef.ConsistencyCoeff * Math.Exp(0 - _EmpiricalCoef.TemperatureCoeffViscosity * (processStateParameter.Temperature - _EmpiricalCoef.CastingTemperature)) * Math.Pow(_VariableParameters.CoverSpeed / _GeometricParameters.Depth, _EmpiricalCoef.CurrentIndex - 1);
+                processStateParameter.Viscosity = Math.Round(_EmpiricalCoef.ConsistencyCoeff * Math.Exp(0 - _EmpiricalCoef.TemperatureCoeffViscosity * (processStateParameter.Temperature - _EmpiricalCoef.CastingTemperature)) * Math.Pow(_VariableParameters.CoverSpeed / _GeometricParameters.Depth, _EmpiricalCoef.CurrentIndex - 1), 2);
 
                 _InputParameter.ProcessStateParameters[i] = processStateParameter;
 
@@ -119,11 +123,15 @@ namespace FlowModel.MathPart
                 z += _ParametersSolution.Step;
             }
 
-            _InputParameter.Efficiency = _MaterialProperties.Density * _VolumeFlowRate;
+            _InputParameter.Efficiency = Math.Round(_MaterialProperties.Density * _VolumeFlowRate, 2);
 
-            _InputParameter.TemperatureProduct = _InputParameter.ProcessStateParameters[_InputParameter.ProcessStateParameters.Length - 1].Temperature;
+            sw.Stop();
 
-            _InputParameter.ViscosityProduct = _InputParameter.ProcessStateParameters[_InputParameter.ProcessStateParameters.Length - 1].Viscosity;
+            _InputParameter.TemperatureProduct = Math.Round(_InputParameter.ProcessStateParameters[_InputParameter.ProcessStateParameters.Length - 1].Temperature, 2);
+
+            _InputParameter.ViscosityProduct = Math.Round(_InputParameter.ProcessStateParameters[_InputParameter.ProcessStateParameters.Length - 1].Viscosity, 2);
+
+            _InputParameter.Time = sw.Elapsed;
 
             InputData = _InputParameter;
         }

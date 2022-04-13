@@ -27,6 +27,11 @@ namespace FlowModel.OutputData
         public double ViscosityProduct { get; set; }
 
         /// <summary>
+        /// Время счета
+        /// </summary>
+        public TimeSpan Time { get; set; }
+
+        /// <summary>
         /// Массив выходных значений
         /// </summary>
         public ProcessStateParameters[]? ProcessStateParameters { get; set; }
