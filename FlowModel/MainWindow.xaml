@@ -97,17 +97,17 @@
                             </ComboBox>
 
                             <TextBlock Margin="0 5 0 0" Grid.Row="1" Grid.Column="0" Text="Плотность"/>
-                            <TextBox Height="22" Text="{Binding MaterialProperties.Density, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBox Height="22" Text="{Binding MaterialProperties.Density, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1"/>
                             <TextBlock Grid.Row="1" Margin="5 5 0 0" Grid.Column="2" Text="кг/м^3"/>
                             <TextBlock Margin="0 5 0 0" Grid.Row="2" Grid.Column="0" >
                             Удельная <LineBreak/> теплоемкость
                             </TextBlock>
-                            <TextBox Height="22" Text="{Binding MaterialProperties.HeatCapacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBox Height="22" Text="{Binding MaterialProperties.HeatCapacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" Grid.Row="2" Grid.Column="1"/>
                             <TextBlock Grid.Row="2" Margin="5 12 0 0" Grid.Column="2" Text="Дж/(кг*С)"/>
                             <TextBlock Margin="0 5 0 0" Grid.Row="3" Grid.Column="0">
                             Температура <LineBreak/> плавления
                             </TextBlock>
-                            <TextBox Height="22" Text="{Binding MaterialProperties.MeltingPoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" Grid.Row="3" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBox Height="22" Text="{Binding MaterialProperties.MeltingPoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" Grid.Row="3" Grid.Column="1"/>
                             <TextBlock Grid.Row="3" Margin="5 12 0 0" Grid.Column="2" Text="С"/>
                         </Grid>
                     </GroupBox>
@@ -133,7 +133,7 @@
                         <TextBlock Margin="0 5 0 0" Grid.Row="1" Grid.Column="0">
                             Температура <LineBreak/> крышки
                         </TextBlock>
-                        <TextBox Text="{Binding VariableParameters.CoverTemperature, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="18" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1"/>
+                        <TextBox Text="{Binding VariableParameters.CoverTemperature, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="22" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1"/>
                         <TextBlock Grid.Row="1" Margin="5 12 0 0" Grid.Column="2" Text="C"/>
                     </Grid>
                 </StackPanel>
@@ -157,25 +157,25 @@
                             <TextBlock Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" >
                             Коэффициент консистенции <LineBreak/> при температуре приведения
                             </TextBlock>
-                            <TextBox Text="{Binding EmpiricalCoeff.ConsistencyCoeff, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,12,0,0" Height="22" Grid.Row="0" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBox Text="{Binding EmpiricalCoeff.ConsistencyCoeff, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,12,0,0" Height="22" Grid.Row="0" Grid.Column="1" />
                             <TextBlock Grid.Row="0" Margin="5 15 0 0" Grid.Column="2" Text="Па*с^n"/>
 
                             <TextBlock Margin="0,5,0,0" Grid.Row="1" Grid.Column="0" >
                             Температурный <LineBreak/> коэффициент вязкости
                             </TextBlock>
-                            <TextBox Text="{Binding EmpiricalCoeff.TemperatureCoeffViscosity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,12,0,0" Height="22" Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBox Text="{Binding EmpiricalCoeff.TemperatureCoeffViscosity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,12,0,0" Height="22" Grid.Row="1" Grid.Column="1" />
                             <TextBlock Grid.Row="1" Margin="5 15 0 0" Grid.Column="2" Text="1/C"/>
 
                             <TextBlock Margin="0,5,0,0" Grid.Row="2" Grid.Column="0" >
                             Температура приведения
                             </TextBlock>
-                            <TextBox Text="{Binding EmpiricalCoeff.CastingTemperature, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" Height="22" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBox Text="{Binding EmpiricalCoeff.CastingTemperature, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" Height="22" Grid.Row="2" Grid.Column="1"/>
                             <TextBlock Grid.Row="2" Margin="5 5 0 0" Grid.Column="2" Text="C"/>
 
                             <TextBlock Margin="0,5,0,0" Grid.Row="3" Grid.Column="0" >
                             Индекс течения
                             </TextBlock>
-                            <TextBox Text="{Binding EmpiricalCoeff.CurrentIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" Height="18" Grid.Row="3" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBox Text="{Binding EmpiricalCoeff.CurrentIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" Height="22" Grid.Row="3" Grid.Column="1"/>
 
                             <TextBlock Margin="0,5,0,0" Grid.Row="4" Grid.Column="0" >
                             Коэффициент теплоотдачи <LineBreak/> от крышки канала к материалу
@@ -249,11 +249,15 @@
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Параметры состояния процесса">
-                        <DataGrid ItemsSource="{Binding OutputParameter.ProcessStateParameters}" Margin="0 0 5 5" MaxHeight="230" GridLinesVisibility="Vertical" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible">
-
+                        <DataGrid ItemsSource="{Binding OutputParameter.ProcessStateParameters}" Margin="0 0 5 5" MaxHeight="230" GridLinesVisibility="Vertical" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Coordinate}" Header="Координата, м"/>
+                                <DataGridTextColumn Binding="{Binding Temperature}" Header="Температура, С"/>
+                                <DataGridTextColumn Binding="{Binding Viscosity}" Header="Вязкость, Па*с"/>
+                            </DataGrid.Columns>
                         </DataGrid>
                     </GroupBox>
-                    <Button Margin="10 10 10 0" Content="Построить график" Style="{DynamicResource MaterialDesignFlatLightBgButton}"/>
+                    <Button Command="{Binding ShowPlot}" Margin="10 10 10 0" Content="Построить график" Style="{DynamicResource MaterialDesignFlatLightBgButton}"/>
 
                 </StackPanel>
 

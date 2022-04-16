@@ -137,7 +137,7 @@ namespace FlowModel
             get
             {
                 return _Calc ??= new RelayCommand(x =>
-                {;
+                {
                     MathCalc calc = new MathCalc(EmpiricalCoeff, GeometricParameters, MaterialProperties, ParametersSolution, VariableParameters);
 
                     calc.GetOutputParameters();                    
@@ -145,6 +145,33 @@ namespace FlowModel
                     OutputParameter = calc.InputData;
                     Time = Math.Round(OutputParameter.Time.TotalMilliseconds, 2).ToString();
                 });
+            }
+        }
+
+        private PlotTempWindow _WindowTemp = null;
+        private PlotTempViewModel _ViewModelTemp;
+
+        private PlotViscosityWindow _WindowViscosity = null;
+        private PlotViscosityViewModel _ViewModelViscosity;
+
+        private RelayCommand _ShowPlot;
+
+        public RelayCommand ShowPlot
+        {
+            get
+            {
+                return _ShowPlot ??= new RelayCommand(x =>
+                 {
+                     _ViewModelTemp = new PlotTempViewModel(OutputParameter);
+                     _WindowTemp = new PlotTempWindow();
+                     _WindowTemp.DataContext = _ViewModelTemp;
+                     _WindowTemp.Show();
+
+                     _ViewModelViscosity = new PlotViscosityViewModel(OutputParameter);
+                     _WindowViscosity = new PlotViscosityWindow();
+                     _WindowViscosity.DataContext = _ViewModelViscosity;
+                     _WindowViscosity.Show();
+                 });
             }
         }
     }

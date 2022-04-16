@@ -14,6 +14,7 @@ namespace FlowModel.OutputData
         /// <summary>
         /// Координата по длине канала
         /// </summary>
+        
         public double Coordinate { get; set; } 
         
         /// <summary>
