@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -172,6 +173,51 @@ namespace FlowModel
                      _WindowViscosity.DataContext = _ViewModelViscosity;
                      _WindowViscosity.Show();
                  });
+            }
+        }
+
+        private RelayCommand _Export;
+
+        public RelayCommand Export
+        {
+            get
+            {
+                return _Export ??= new RelayCommand(x =>
+                {                    
+                    var directory = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "Отчеты"));
+
+                    if (!directory.Exists)
+                    {
+                        directory = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "Отчеты"));
+                        directory.Create();
+                    }
+
+                    string path = $"Отчет №1. {DateTime.Today.ToShortDateString()}.xlsx";
+                    var file = new FileInfo(Path.Combine(directory.FullName, path));
+                    
+                    int num = 1;
+                    while (file.Exists)
+                    {
+                        path = Path.Combine(directory.FullName, $"Отчет №{num}. {DateTime.Today.ToShortDateString()}.xlsx");
+                        path.Replace(',', ' ');
+                        file = new FileInfo(Path.Combine(path));
+                        num++;
+                    };
+
+                    ExportExcel.Export(OutputParameter, EmpiricalCoeff, GeometricParameters, MaterialProperties, ParametersSolution, VariableParameters);
+
+                    var result = MessageBox.Show($"Открыть файл в формате Excel? Он также будет сохранен по пути {directory.FullName}", "Экспорт в Excel", MessageBoxButton.YesNo);
+
+                    switch (result)
+                    {
+                        case MessageBoxResult.Yes:
+                            ExportExcel.Save(path);
+                            break;
+                        case MessageBoxResult.No:
+                            ExportExcel.SaveAndClose(path);                                                    
+                            break;
+                    }
+                });
             }
         }
     }

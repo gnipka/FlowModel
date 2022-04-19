@@ -210,7 +210,7 @@
 
                     <Button Command="{Binding Calc}" Margin="10 16 10 0" Content="Расчет" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
 
-                    <Button Margin="10 16 10 0" Content="Сохранить отчет" Style="{DynamicResource MaterialDesignFlatLightBgButton}"/>
+                    <Button Command="{Binding Export}" Margin="10 16 10 0" Content="Сохранить отчет" Style="{DynamicResource MaterialDesignFlatLightBgButton}"/>
 
                 </StackPanel>
 
