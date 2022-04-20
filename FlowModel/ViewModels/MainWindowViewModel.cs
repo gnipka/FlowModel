@@ -131,6 +131,15 @@ namespace FlowModel
 
         #endregion
 
+        public void CallCalc()
+        {
+            MathCalc calc = new MathCalc(EmpiricalCoeff, GeometricParameters, MaterialProperties, ParametersSolution, VariableParameters);
+
+            calc.GetOutputParameters();
+
+            OutputParameter = calc.InputData;
+            Time = Math.Round(OutputParameter.Time.TotalMilliseconds, 2).ToString();
+        }
 
         private RelayCommand _Calc;
         public RelayCommand Calc
@@ -139,20 +148,21 @@ namespace FlowModel
             {
                 return _Calc ??= new RelayCommand(x =>
                 {
-                    MathCalc calc = new MathCalc(EmpiricalCoeff, GeometricParameters, MaterialProperties, ParametersSolution, VariableParameters);
+                    CallCalc();
+                    //MathCalc calc = new MathCalc(EmpiricalCoeff, GeometricParameters, MaterialProperties, ParametersSolution, VariableParameters);
 
-                    calc.GetOutputParameters();                    
+                    //calc.GetOutputParameters();                    
 
-                    OutputParameter = calc.InputData;
-                    Time = Math.Round(OutputParameter.Time.TotalMilliseconds, 2).ToString();
+                    //OutputParameter = calc.InputData;
+                    //Time = Math.Round(OutputParameter.Time.TotalMilliseconds, 2).ToString();
                 });
             }
         }
 
-        private PlotTempWindow _WindowTemp = null;
+        private PlotTempWindow? _WindowTemp = null;
         private PlotTempViewModel _ViewModelTemp;
 
-        private PlotViscosityWindow _WindowViscosity = null;
+        private PlotViscosityWindow? _WindowViscosity = null;
         private PlotViscosityViewModel _ViewModelViscosity;
 
         private RelayCommand _ShowPlot;
@@ -163,6 +173,11 @@ namespace FlowModel
             {
                 return _ShowPlot ??= new RelayCommand(x =>
                  {
+                     if(OutputParameter.ProcessStateParameters is null)
+                     {
+                         CallCalc();
+                     }
+
                      _ViewModelTemp = new PlotTempViewModel(OutputParameter);
                      _WindowTemp = new PlotTempWindow();
                      _WindowTemp.DataContext = _ViewModelTemp;
@@ -183,7 +198,12 @@ namespace FlowModel
             get
             {
                 return _Export ??= new RelayCommand(x =>
-                {                    
+                {
+                    if (OutputParameter.ProcessStateParameters is null)
+                    {
+                        CallCalc();
+                    }
+
                     var directory = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "Отчеты"));
 
                     if (!directory.Exists)
