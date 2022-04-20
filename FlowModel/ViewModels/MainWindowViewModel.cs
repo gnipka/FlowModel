@@ -192,7 +192,7 @@ namespace FlowModel
                         directory.Create();
                     }
 
-                    string path = $"Отчет №1. {DateTime.Today.ToShortDateString()}.xlsx";
+                    string path = Path.Combine(directory.FullName, $"Отчет №1. {DateTime.Today.ToShortDateString()}.xlsx");
                     var file = new FileInfo(Path.Combine(directory.FullName, path));
                     
                     int num = 1;

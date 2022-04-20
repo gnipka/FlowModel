@@ -149,7 +149,7 @@ namespace FlowModel
 
             
             Microsoft.Office.Interop.Excel.ChartObjects xlCharts = (Microsoft.Office.Interop.Excel.ChartObjects)_Worksheet.ChartObjects(Type.Missing);
-            Microsoft.Office.Interop.Excel.ChartObject myChart = (Microsoft.Office.Interop.Excel.ChartObject)xlCharts.Add(1000, 10, 300, 250);
+            Microsoft.Office.Interop.Excel.ChartObject myChart = (Microsoft.Office.Interop.Excel.ChartObject)xlCharts.Add(750, 10, 300, 250);
             Microsoft.Office.Interop.Excel.Chart chartPage = myChart.Chart;
             object misValue = Missing.Value;
 
@@ -160,8 +160,61 @@ namespace FlowModel
 
             //chartPage.SetSourceData(chartRange, misValue);
             chartPage.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlXYScatterLines;
-            chartPage.HasLegend = false;
-            myChart.Name = "График зависимости температуры от времени";
+            
+            myChart.Activate();
+
+            //Создаем надпись - Заглавие диаграммы
+            _Excel.ActiveChart.HasTitle = true;
+            _Excel.ActiveChart.ChartTitle.Text = "График зависимости температуры от координаты по длине канала";
+            _Excel.ActiveChart.ChartTitle.Font.Size = 14;
+
+
+            //Убираем отображение легенды
+            _Excel.ActiveChart.HasLegend = false;
+
+            //Наименование осей
+            ((Microsoft.Office.Interop.Excel.Axis)_Excel.ActiveChart.Axes(Microsoft.Office.Interop.Excel.XlAxisType.xlCategory,
+       Microsoft.Office.Interop.Excel.XlAxisGroup.xlPrimary)).HasTitle = true;
+            ((Microsoft.Office.Interop.Excel.Axis)_Excel.ActiveChart.Axes(Microsoft.Office.Interop.Excel.XlAxisType.xlCategory,
+                Microsoft.Office.Interop.Excel.XlAxisGroup.xlPrimary)).AxisTitle.Text = "Координата по длине канала, м";
+            ((Microsoft.Office.Interop.Excel.Axis)_Excel.ActiveChart.Axes(Microsoft.Office.Interop.Excel.XlAxisType.xlValue,
+       Microsoft.Office.Interop.Excel.XlAxisGroup.xlPrimary)).HasTitle = true;
+            ((Microsoft.Office.Interop.Excel.Axis)_Excel.ActiveChart.Axes(Microsoft.Office.Interop.Excel.XlAxisType.xlValue,
+                Microsoft.Office.Interop.Excel.XlAxisGroup.xlPrimary)).AxisTitle.Text = "Температура, С";
+
+
+            Microsoft.Office.Interop.Excel.ChartObjects xlCharts2 = (Microsoft.Office.Interop.Excel.ChartObjects)_Worksheet.ChartObjects(Type.Missing);
+            Microsoft.Office.Interop.Excel.ChartObject myChart2 = (Microsoft.Office.Interop.Excel.ChartObject)xlCharts2.Add(750,250, 300, 250);
+            Microsoft.Office.Interop.Excel.Chart chartPage2 = myChart2.Chart;
+            object misValue2 = Missing.Value;
+
+            SeriesCollection seriesCollection2 = (SeriesCollection)chartPage2.SeriesCollection(Type.Missing);
+            Series series2 = seriesCollection2.NewSeries();
+            series2.XValues = _Worksheet.get_Range("A2", "A47");
+            series2.Values = _Worksheet.get_Range("C2", "C47");
+
+            //chartPage.SetSourceData(chartRange, misValue);
+            chartPage2.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlXYScatterLines;
+
+            myChart2.Activate();
+
+            //Создаем надпись - Заглавие диаграммы
+            _Excel.ActiveChart.HasTitle = true;
+            _Excel.ActiveChart.ChartTitle.Text = "График зависимости вязкости от координаты по длине канала";
+            _Excel.ActiveChart.ChartTitle.Font.Size = 14;
+
+            //Убираем отображение легенды
+            _Excel.ActiveChart.HasLegend = false;
+
+            //Наименование осей
+            ((Microsoft.Office.Interop.Excel.Axis)_Excel.ActiveChart.Axes(Microsoft.Office.Interop.Excel.XlAxisType.xlCategory,
+       Microsoft.Office.Interop.Excel.XlAxisGroup.xlPrimary)).HasTitle = true;
+            ((Microsoft.Office.Interop.Excel.Axis)_Excel.ActiveChart.Axes(Microsoft.Office.Interop.Excel.XlAxisType.xlCategory,
+                Microsoft.Office.Interop.Excel.XlAxisGroup.xlPrimary)).AxisTitle.Text = "Координата по длине канала, м";
+            ((Microsoft.Office.Interop.Excel.Axis)_Excel.ActiveChart.Axes(Microsoft.Office.Interop.Excel.XlAxisType.xlValue,
+       Microsoft.Office.Interop.Excel.XlAxisGroup.xlPrimary)).HasTitle = true;
+            ((Microsoft.Office.Interop.Excel.Axis)_Excel.ActiveChart.Axes(Microsoft.Office.Interop.Excel.XlAxisType.xlValue,
+                Microsoft.Office.Interop.Excel.XlAxisGroup.xlPrimary)).AxisTitle.Text = "Вязкость, Па*с";
         }
 
         public static void SaveAndClose(string fileName)
