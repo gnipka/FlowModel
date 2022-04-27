@@ -71,7 +71,7 @@
                                     <Binding Path="GeometricParameters.Width" 
                                         ValidatesOnExceptions="True" 
                                         Mode="TwoWay"
-                                        UpdateSourceTrigger="PropertyChanged" 
+                                        UpdateSourceTrigger="PropertyChanged"
                                         ValidatesOnDataErrors="True">
                                         <Binding.ValidationRules>
                                             <local:InventoryValidationRule

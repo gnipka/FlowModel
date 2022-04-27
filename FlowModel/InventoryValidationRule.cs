@@ -37,11 +37,11 @@ namespace FlowModel
             else if (double.TryParse(str, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out parsedNumberPoint))
             {
                 if (parsedNumberPoint <= 0)
-                {
-                    cultureInfo = CultureInfo.InvariantCulture;
+                {                    
                     return new ValidationResult(false,
                    "Введите корректное число");
                 }
+                value = parsedNumberPoint;
                 InventoryPattern = parsedNumberPoint.ToString();
                 return ValidationResult.ValidResult;
             }
