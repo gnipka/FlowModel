@@ -38,7 +38,7 @@ namespace FlowModel
             _OutputParameter = outputParameter;
 
 
-            _MyModel = new PlotModel { Title = "График зависимости вязкости от координаты по длине канала", TitleFontSize = 16 };
+            _MyModel = new PlotModel { Title = "График распределения вязкости по длине канала", TitleFontSize = 16 };
             var line = new LineSeries()
             {
                 Color = OxyPlot.OxyColors.ForestGreen,
@@ -53,7 +53,7 @@ namespace FlowModel
             }
 
             _MyModel.Padding = new OxyThickness(10, 0, 10, 0);
-            _MyModel.Series.Add(line);
+            _MyModel.Series.Add(line); 
             _MyModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Координата по длине канала, м" });
             _MyModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "Вязкость, Па*с" });
         }

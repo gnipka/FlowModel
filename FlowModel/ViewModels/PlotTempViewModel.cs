@@ -38,7 +38,7 @@ namespace FlowModel
             _OutputParameter = outputParameter;
 
 
-            _MyModel = new PlotModel { Title = "График зависимости температуры от координаты по длине канала", TitleFontSize = 16 };
+            _MyModel = new PlotModel { Title = "График распределения температуры по длине канала", TitleFontSize = 16 };
             var line = new LineSeries()
             {
                 Color = OxyPlot.OxyColors.Plum,

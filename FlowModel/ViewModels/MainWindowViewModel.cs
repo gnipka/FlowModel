@@ -47,13 +47,14 @@ namespace FlowModel
         }
 
         #region [Input Parametrs]
+
         private GeometricParameters _GeometricParameters = new GeometricParameters { Depth=0.009, Length=4.5, Width=0.2};
 
         public GeometricParameters GeometricParameters
         { 
             get { return _GeometricParameters; }
             set 
-            { 
+            {
                 _GeometricParameters = value;
                 OnPropertyChanged();
             }
@@ -204,11 +205,11 @@ namespace FlowModel
                         CallCalc();
                     }
 
-                    var directory = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "Отчеты"));
+                    var directory = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Отчеты"));
 
                     if (!directory.Exists)
                     {
-                        directory = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "Отчеты"));
+                        directory = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Отчеты"));
                         directory.Create();
                     }
 

@@ -6,7 +6,7 @@
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:local="clr-namespace:FlowModel"
         mc:Ignorable="d"
-        Title="График зависимости темпартуры от координаты по длине канала" Height="450" Width="800">
+        Title="График распределения температуры по длине канала" Height="450" Width="800">
     <Grid>
         <oxy:PlotView Model="{Binding MyModel}"></oxy:PlotView>
     </Grid>

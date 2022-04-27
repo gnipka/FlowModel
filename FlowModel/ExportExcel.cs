@@ -25,196 +25,149 @@ namespace FlowModel
             //_Workbook = _Excel.Workbooks.Open(file.FullName);
             _Worksheet = (Worksheet)_Workbook.ActiveSheet;
             _Worksheet.Columns.AutoFit();
-            _Worksheet.Columns.EntireColumn.ColumnWidth = 25;
+            
 
-
+            _Worksheet.Range["A1"].ColumnWidth = 31;
+            _Worksheet.Range["B1"].ColumnWidth = 18;
+            _Worksheet.Range["C1"].ColumnWidth = 29;
+            _Worksheet.Range["D1"].ColumnWidth = 15;
+            _Worksheet.Range["E1"].ColumnWidth = 15;
+            _Worksheet.Range["F1"].ColumnWidth = 29;
+            _Worksheet.Range["G1"].ColumnWidth = 10;
             // Добавление названий столбцов
-            _Worksheet.Range["A1"].Offset[0, 0].Value = "Координата по длине канала, м";
-            _Worksheet.Range["A1"].Offset[0, 1].Value = "Температура, С";
-            _Worksheet.Range["A1"].Offset[0, 2].Value = "Вязкость, Па*с";
+            _Worksheet.Range["C1"].Offset[0, 0].Value = "Координата по длине канала, м";
+            _Worksheet.Range["C1"].Font.Bold = true;            
+            _Worksheet.Range["C1"].Offset[0, 1].Value = "Температура, С";
+            _Worksheet.Range["D1"].Font.Bold = true;
+            _Worksheet.Range["C1"].Offset[0, 2].Value = "Вязкость, Па*с";
+            _Worksheet.Range["E1"].Font.Bold = true;
 
             //прорисовка границ
-            _Worksheet.Range["A1"].Offset[0, 0].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["A1"].Offset[0, 1].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["A1"].Offset[0, 2].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["C1"].Offset[0, 0].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["C1"].Offset[0, 1].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["C1"].Offset[0, 2].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
 
 
             for (int i = 1; i < outputParameter.ProcessStateParameters.Length + 1; i++)
             {
                 //заполнение данными
-                _Worksheet.Range["A1"].Offset[i, 0].Value = outputParameter.ProcessStateParameters[i - 1].Coordinate;
-                _Worksheet.Range["A1"].Offset[i, 1].Value = outputParameter.ProcessStateParameters[i - 1].Temperature;
-                _Worksheet.Range["A1"].Offset[i, 2].Value = outputParameter.ProcessStateParameters[i - 1].Viscosity;
+                _Worksheet.Range["C1"].Offset[i, 0].Value = outputParameter.ProcessStateParameters[i - 1].Coordinate;
+                _Worksheet.Range["C1"].Offset[i, 1].Value = outputParameter.ProcessStateParameters[i - 1].Temperature;
+                _Worksheet.Range["C1"].Offset[i, 2].Value = outputParameter.ProcessStateParameters[i - 1].Viscosity;
 
                 //прорисовка границ
-                _Worksheet.Range["A1"].Offset[i, 0].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-                _Worksheet.Range["A1"].Offset[i, 1].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-                _Worksheet.Range["A1"].Offset[i, 2].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+                _Worksheet.Range["C1"].Offset[i, 0].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+                _Worksheet.Range["C1"].Offset[i, 1].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+                _Worksheet.Range["C1"].Offset[i, 2].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
             }
 
-            _Worksheet.Range["D1"].Value = "Критериальные показатели";
-            _Worksheet.Range["D1"].Font.Bold = true;
-            _Worksheet.Range["D1"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["F1"].Value = "Критериальные показатели";
+            _Worksheet.Range["F1"].Font.Bold = true;
+            _Worksheet.Range["F1"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["G1"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
 
-            _Worksheet.Range["D2"].Value = "Производительность канала, кг/ч";
-            _Worksheet.Range["D2"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E2"].Value = outputParameter.Efficiency;
-            _Worksheet.Range["E2"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["F2"].Value = "Производительность канала, кг/ч";
+            _Worksheet.Range["F2"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["G2"].Value = outputParameter.Efficiency;
+            _Worksheet.Range["G2"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
 
-            _Worksheet.Range["D3"].Value = "Температура, С";
-            _Worksheet.Range["D3"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E3"].Value = outputParameter.TemperatureProduct;
-            _Worksheet.Range["E3"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["F3"].Value = "Температура, С";
+            _Worksheet.Range["F3"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["G3"].Value = outputParameter.TemperatureProduct;
+            _Worksheet.Range["G3"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
 
-            _Worksheet.Range["D4"].Value = "Вязкость продукта канала, Па*с";
-            _Worksheet.Range["D4"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E4"].Value = outputParameter.ViscosityProduct;
-            _Worksheet.Range["E4"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["F4"].Value = "Вязкость продукта канала, Па*с";
+            _Worksheet.Range["F4"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["G4"].Value = outputParameter.ViscosityProduct;
+            _Worksheet.Range["G4"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
 
-            _Worksheet.Range["D6"].Value = "Геометрические параметры";
-            _Worksheet.Range["D6"].Font.Bold = true;
-            _Worksheet.Range["D6"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["D7"].Value = "Ширина, м";
-            _Worksheet.Range["D7"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E7"].Value = geometricParameters.Width;
-            _Worksheet.Range["E7"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["D8"].Value = "Длина, м";
-            _Worksheet.Range["D8"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E8"].Value = geometricParameters.Length;
-            _Worksheet.Range["E8"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["D9"].Value = "Глубина, м";
-            _Worksheet.Range["D9"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E9"].Value = geometricParameters.Depth;
-            _Worksheet.Range["E9"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range[_Worksheet.Cells[1, 1], _Worksheet.Cells[1, 2]].Merge();
+            _Worksheet.Range[_Worksheet.Cells[1, 1], _Worksheet.Cells[1, 2]].Value = "Входные параметры";
+            _Worksheet.Range[_Worksheet.Cells[1, 1], _Worksheet.Cells[1, 2]].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range[_Worksheet.Cells[1, 1], _Worksheet.Cells[1, 2]].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+            _Worksheet.Range[_Worksheet.Cells[1, 1], _Worksheet.Cells[1, 2]].Font.Bold = true;
 
-            _Worksheet.Range["D11"].Value = "Параметры свойств материала";
-            _Worksheet.Range["D11"].Font.Bold = true;
-            _Worksheet.Range["D11"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["D12"].Value = "Плотность, кг/м^3";
-            _Worksheet.Range["D12"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E12"].Value = materialProperties.Density;
-            _Worksheet.Range["E12"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["D13"].Value = "Удельная теплоемкость, Дж/(кг*С)";
-            _Worksheet.Range["D13"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E13"].Value = materialProperties.HeatCapacity;
-            _Worksheet.Range["E13"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["D14"].Value = "Температура плавления, С";
-            _Worksheet.Range["D14"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E14"].Value = materialProperties.MeltingPoint;
-            _Worksheet.Range["E14"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A2"].Value = "Геометрические параметры";
+            _Worksheet.Range["A2"].Font.Bold = true;
+            _Worksheet.Range["A2"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B2"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A3"].Value = "Ширина, м";
+            _Worksheet.Range["A3"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B3"].Value = geometricParameters.Width;
+            _Worksheet.Range["B3"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A4"].Value = "Длина, м";
+            _Worksheet.Range["A4"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B4"].Value = geometricParameters.Length;
+            _Worksheet.Range["B4"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A5"].Value = "Глубина, м";
+            _Worksheet.Range["A5"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B5"].Value = geometricParameters.Depth;
+            _Worksheet.Range["B5"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
 
-            _Worksheet.Range["D16"].Value = "Варьируемые параметры";
-            _Worksheet.Range["D16"].Font.Bold = true;
-            _Worksheet.Range["D16"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["D17"].Value = "Скорость крышки, м/с";
-            _Worksheet.Range["D17"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E17"].Value = variableParameters.CoverSpeed;
-            _Worksheet.Range["E17"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["D18"].Value = "Температура крышки, С";
-            _Worksheet.Range["D18"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E18"].Value = variableParameters.CoverTemperature;
-            _Worksheet.Range["E18"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A7"].Value = "Параметры свойств материала";
+            _Worksheet.Range["A7"].Font.Bold = true;
+            _Worksheet.Range["A7"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B7"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A8"].Value = "Плотность, кг/м^3";
+            _Worksheet.Range["A8"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B8"].Value = materialProperties.Density;
+            _Worksheet.Range["B8"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A9"].Value = "Удельная теплоемкость, Дж/(кг*С)";
+            _Worksheet.Range["A9"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B9"].Value = materialProperties.HeatCapacity;
+            _Worksheet.Range["B9"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A10"].Value = "Температура плавления, С";
+            _Worksheet.Range["A10"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B10"].Value = materialProperties.MeltingPoint;
+            _Worksheet.Range["B10"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
 
-            _Worksheet.Range["D20"].Value = "Эмпирические коэффициенты математической модели";
-            _Worksheet.Range["D20"].Font.Bold = true;
-            _Worksheet.Range["D20"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["D21"].Value = "Коэффициент консистенции при температуре приведения, Па*с^n";
-            _Worksheet.Range["D21"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E21"].Value = empiricalCoeff.ConsistencyCoeff;
-            _Worksheet.Range["E21"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["D22"].Value = "Температурный коэффициент вязкости, 1/C";
-            _Worksheet.Range["D22"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E22"].Value = empiricalCoeff.TemperatureCoeffViscosity;
-            _Worksheet.Range["E22"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["D23"].Value = "Температура приведения, С";
-            _Worksheet.Range["D23"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E23"].Value = empiricalCoeff.CastingTemperature;
-            _Worksheet.Range["E23"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["D24"].Value = "Индекс течения";
-            _Worksheet.Range["D24"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E24"].Value = empiricalCoeff.CurrentIndex;
-            _Worksheet.Range["E24"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["D25"].Value = "Коэффициент теплоотдачи от крышки канала к материалу, Вт/(м^2*C)";
-            _Worksheet.Range["D25"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E25"].Value = empiricalCoeff.HeatTransferCoeff;
-            _Worksheet.Range["E25"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A12"].Value = "Варьируемые параметры";
+            _Worksheet.Range["A12"].Font.Bold = true;
+            _Worksheet.Range["A12"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B12"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A13"].Value = "Скорость крышки, м/с";
+            _Worksheet.Range["A13"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B13"].Value = variableParameters.CoverSpeed;
+            _Worksheet.Range["B13"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A14"].Value = "Температура крышки, С";
+            _Worksheet.Range["A14"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B14"].Value = variableParameters.CoverTemperature;
+            _Worksheet.Range["B14"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
 
-            _Worksheet.Range["D27"].Value = "Параметры метода решения модели";
-            _Worksheet.Range["D27"].Font.Bold = true;
-            _Worksheet.Range["D27"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["D28"].Value = "Шаг расчета по длине канала, м";
-            _Worksheet.Range["D28"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
-            _Worksheet.Range["E28"].Value = parametersSolution.Step;
-            _Worksheet.Range["E28"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A16"].Value = "Эмпирические коэффициенты математической модели";
+            _Worksheet.Range["A16"].Font.Bold = true;
+            _Worksheet.Range["A16"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B16"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A17"].Value = "Коэффициент консистенции при температуре приведения, Па*с^n";
+            _Worksheet.Range["A17"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B17"].Value = empiricalCoeff.ConsistencyCoeff;
+            _Worksheet.Range["B17"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A17"].Value = "Температурный коэффициент вязкости, 1/C";
+            _Worksheet.Range["A17"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B18"].Value = empiricalCoeff.TemperatureCoeffViscosity;
+            _Worksheet.Range["B18"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A19"].Value = "Температура приведения, С";
+            _Worksheet.Range["A19"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B19"].Value = empiricalCoeff.CastingTemperature;
+            _Worksheet.Range["B19"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A20"].Value = "Индекс течения";
+            _Worksheet.Range["A20"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B20"].Value = empiricalCoeff.CurrentIndex;
+            _Worksheet.Range["B20"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A21"].Value = "Коэффициент теплоотдачи от крышки канала к материалу, Вт/(м^2*C)";
+            _Worksheet.Range["A21"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B21"].Value = empiricalCoeff.HeatTransferCoeff;
+            _Worksheet.Range["B21"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
 
+            _Worksheet.Range["A23"].Value = "Параметры метода решения модели";
+            _Worksheet.Range["A23"].Font.Bold = true;
+            _Worksheet.Range["A23"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B23"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["A24"].Value = "Шаг расчета по длине канала, м";
+            _Worksheet.Range["A24"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;
+            _Worksheet.Range["B24"].Value = parametersSolution.Step;
+            _Worksheet.Range["B24"].Borders.LineStyle = XlAboveBelow.xlBelowAverage;           
             
-            Microsoft.Office.Interop.Excel.ChartObjects xlCharts = (Microsoft.Office.Interop.Excel.ChartObjects)_Worksheet.ChartObjects(Type.Missing);
-            Microsoft.Office.Interop.Excel.ChartObject myChart = (Microsoft.Office.Interop.Excel.ChartObject)xlCharts.Add(750, 10, 300, 250);
-            Microsoft.Office.Interop.Excel.Chart chartPage = myChart.Chart;
-            object misValue = Missing.Value;
-
-            SeriesCollection seriesCollection = (SeriesCollection)chartPage.SeriesCollection(Type.Missing);
-            Series series = seriesCollection.NewSeries();
-            series.XValues = _Worksheet.get_Range("A2", "A47");
-            series.Values = _Worksheet.get_Range("B2", "B47");
-
-            //chartPage.SetSourceData(chartRange, misValue);
-            chartPage.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlXYScatterLines;
-            
-            myChart.Activate();
-
-            //Создаем надпись - Заглавие диаграммы
-            _Excel.ActiveChart.HasTitle = true;
-            _Excel.ActiveChart.ChartTitle.Text = "График зависимости температуры от координаты по длине канала";
-            _Excel.ActiveChart.ChartTitle.Font.Size = 14;
-
-
-            //Убираем отображение легенды
-            _Excel.ActiveChart.HasLegend = false;
-
-            //Наименование осей
-            ((Microsoft.Office.Interop.Excel.Axis)_Excel.ActiveChart.Axes(Microsoft.Office.Interop.Excel.XlAxisType.xlCategory,
-       Microsoft.Office.Interop.Excel.XlAxisGroup.xlPrimary)).HasTitle = true;
-            ((Microsoft.Office.Interop.Excel.Axis)_Excel.ActiveChart.Axes(Microsoft.Office.Interop.Excel.XlAxisType.xlCategory,
-                Microsoft.Office.Interop.Excel.XlAxisGroup.xlPrimary)).AxisTitle.Text = "Координата по длине канала, м";
-            ((Microsoft.Office.Interop.Excel.Axis)_Excel.ActiveChart.Axes(Microsoft.Office.Interop.Excel.XlAxisType.xlValue,
-       Microsoft.Office.Interop.Excel.XlAxisGroup.xlPrimary)).HasTitle = true;
-            ((Microsoft.Office.Interop.Excel.Axis)_Excel.ActiveChart.Axes(Microsoft.Office.Interop.Excel.XlAxisType.xlValue,
-                Microsoft.Office.Interop.Excel.XlAxisGroup.xlPrimary)).AxisTitle.Text = "Температура, С";
-
-
-            Microsoft.Office.Interop.Excel.ChartObjects xlCharts2 = (Microsoft.Office.Interop.Excel.ChartObjects)_Worksheet.ChartObjects(Type.Missing);
-            Microsoft.Office.Interop.Excel.ChartObject myChart2 = (Microsoft.Office.Interop.Excel.ChartObject)xlCharts2.Add(750,250, 300, 250);
-            Microsoft.Office.Interop.Excel.Chart chartPage2 = myChart2.Chart;
-            object misValue2 = Missing.Value;
-
-            SeriesCollection seriesCollection2 = (SeriesCollection)chartPage2.SeriesCollection(Type.Missing);
-            Series series2 = seriesCollection2.NewSeries();
-            series2.XValues = _Worksheet.get_Range("A2", "A47");
-            series2.Values = _Worksheet.get_Range("C2", "C47");
-
-            //chartPage.SetSourceData(chartRange, misValue);
-            chartPage2.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlXYScatterLines;
-
-            myChart2.Activate();
-
-            //Создаем надпись - Заглавие диаграммы
-            _Excel.ActiveChart.HasTitle = true;
-            _Excel.ActiveChart.ChartTitle.Text = "График зависимости вязкости от координаты по длине канала";
-            _Excel.ActiveChart.ChartTitle.Font.Size = 14;
-
-            //Убираем отображение легенды
-            _Excel.ActiveChart.HasLegend = false;
-
-            //Наименование осей
-            ((Microsoft.Office.Interop.Excel.Axis)_Excel.ActiveChart.Axes(Microsoft.Office.Interop.Excel.XlAxisType.xlCategory,
-       Microsoft.Office.Interop.Excel.XlAxisGroup.xlPrimary)).HasTitle = true;
-            ((Microsoft.Office.Interop.Excel.Axis)_Excel.ActiveChart.Axes(Microsoft.Office.Interop.Excel.XlAxisType.xlCategory,
-                Microsoft.Office.Interop.Excel.XlAxisGroup.xlPrimary)).AxisTitle.Text = "Координата по длине канала, м";
-            ((Microsoft.Office.Interop.Excel.Axis)_Excel.ActiveChart.Axes(Microsoft.Office.Interop.Excel.XlAxisType.xlValue,
-       Microsoft.Office.Interop.Excel.XlAxisGroup.xlPrimary)).HasTitle = true;
-            ((Microsoft.Office.Interop.Excel.Axis)_Excel.ActiveChart.Axes(Microsoft.Office.Interop.Excel.XlAxisType.xlValue,
-                Microsoft.Office.Interop.Excel.XlAxisGroup.xlPrimary)).AxisTitle.Text = "Вязкость, Па*с";
         }
 
         public static void SaveAndClose(string fileName)

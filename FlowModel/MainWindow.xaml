@@ -30,7 +30,7 @@
                     <TextBlock Grid.Column="3" Text="мc" FontSize="14" Height="28" Margin="0 5 0 0"/>
                     <TextBlock Grid.Column="4" Margin="0 5 0 0" FontSize="14" Height="28" Text="Объем оперативной памяти"/>
                     <TextBox  Text="{Binding MemoryParam}" Width="40" FontSize="14" Height="28" Grid.Column="5"/>
-                    <TextBlock Text="Мб" FontSize="14" Height="28" Margin="0 5 0 0" Grid.Column="6"/>
+                    <TextBlock Text="МБ" FontSize="14" Height="28" Margin="0 5 0 0" Grid.Column="6"/>
                 </Grid>
             </Border>
             <Grid Margin="0 10 0 0">
@@ -55,7 +55,7 @@
                     <GroupBox Margin="0 5 0 0" Header="Геометрические параметры канала">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition/>
+                                <RowDefinition Height="32"/>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
@@ -64,14 +64,58 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition MaxWidth="60"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Margin="0 5 0 0" Grid.Row="0" Grid.Column="0" Text="Ширина"/>
-                            <TextBox Height="22"  Margin="0 5 0 0" Grid.Row="0" Text="{Binding GeometricParameters.Width, StringFormat=0.0#####}" Grid.Column="1"/>
+
+                            <TextBlock Margin="0 10 0 0" Grid.Row="0" Grid.Column="0" Text="Ширина"/>
+                            <TextBox Height="26" Grid.Column="1"  Margin="0 5 0 0" Grid.Row="0">
+                                <TextBox.Text>
+                                    <Binding Path="GeometricParameters.Width" 
+                                        ValidatesOnExceptions="True" 
+                                        Mode="TwoWay"
+                                        UpdateSourceTrigger="PropertyChanged" 
+                                        ValidatesOnDataErrors="True">
+                                        <Binding.ValidationRules>
+                                            <local:InventoryValidationRule
+                                                InventoryPattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                             <TextBlock Grid.Row="0" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
-                            <TextBlock Margin="0 5 0 0" Grid.Row="1" Grid.Column="0" Text="Глубина"/>
-                            <TextBox Height="22" Text="{Binding GeometricParameters.Depth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1"/>
+                            <TextBlock Margin="0 10 0 0" Grid.Row="1" Grid.Column="0" Text="Глубина"/>
+                            <TextBox Height="26" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1">
+                                <TextBox.Text>
+                                    <Binding Path="GeometricParameters.Depth" 
+                                        ValidatesOnExceptions="True" 
+                                        Mode="TwoWay"
+                                        UpdateSourceTrigger="PropertyChanged" 
+                                        ValidatesOnDataErrors="True">
+                                        <Binding.ValidationRules>
+                                            <local:InventoryValidationRule
+                                                InventoryPattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>                            
                             <TextBlock Grid.Row="1" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
-                            <TextBlock Margin="0 5 0 0" Grid.Row="2" Grid.Column="0" Text="Длина"/>
-                            <TextBox Height="22" Text="{Binding GeometricParameters.Length, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}" Margin="0 5 0 0" Grid.Row="2" Grid.Column="1"/>
+                            <TextBlock  Margin="0 10 0 0" Grid.Row="2" Grid.Column="0" Text="Длина"/>
+                            <TextBox Height="26" Margin="0 5 0 0" Grid.Row="2" Grid.Column="1">
+                                <TextBox.Text>
+                                    <Binding Path="GeometricParameters.Length" 
+                                        ValidatesOnExceptions="True" 
+                                        Mode="TwoWay"
+                                        UpdateSourceTrigger="PropertyChanged" 
+                                        ValidatesOnDataErrors="True">
+                                        <Binding.ValidationRules>
+                                            <local:InventoryValidationRule
+                                                InventoryPattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>                           
+                            
                             <TextBlock Grid.Row="2" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
                         </Grid>
                     </GroupBox>
@@ -97,17 +141,56 @@
                             </ComboBox>
 
                             <TextBlock Margin="0 5 0 0" Grid.Row="1" Grid.Column="0" Text="Плотность"/>
-                            <TextBox Height="22" Text="{Binding MaterialProperties.Density, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1"/>
+                            <TextBox Height="26" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1">
+                                <TextBox.Text>
+                                    <Binding Path="MaterialProperties.Density" 
+                                        ValidatesOnExceptions="True" 
+                                        Mode="TwoWay"
+                                        UpdateSourceTrigger="PropertyChanged" 
+                                        ValidatesOnDataErrors="True">
+                                        <Binding.ValidationRules>
+                                            <local:InventoryValidationRule
+                                                InventoryPattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>                            
                             <TextBlock Grid.Row="1" Margin="5 5 0 0" Grid.Column="2" Text="кг/м^3"/>
                             <TextBlock Margin="0 5 0 0" Grid.Row="2" Grid.Column="0" >
                             Удельная <LineBreak/> теплоемкость
                             </TextBlock>
-                            <TextBox Height="22" Text="{Binding MaterialProperties.HeatCapacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}" Margin="0 5 0 0" Grid.Row="2" Grid.Column="1"/>
+                            <TextBox Height="26" Margin="0 5 0 0" Grid.Row="2" Grid.Column="1">
+                                <TextBox.Text>
+                                    <Binding Path="MaterialProperties.HeatCapacity" 
+                                        ValidatesOnExceptions="True" 
+                                        Mode="TwoWay"
+                                        UpdateSourceTrigger="PropertyChanged" 
+                                        ValidatesOnDataErrors="True">
+                                        <Binding.ValidationRules>
+                                            <local:InventoryValidationRule
+                                                InventoryPattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>                            
                             <TextBlock Grid.Row="2" Margin="5 12 0 0" Grid.Column="2" Text="Дж/(кг*С)"/>
                             <TextBlock Margin="0 5 0 0" Grid.Row="3" Grid.Column="0">
                             Температура <LineBreak/> плавления
                             </TextBlock>
-                            <TextBox Height="22" Text="{Binding MaterialProperties.MeltingPoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}" Margin="0 5 0 0" Grid.Row="3" Grid.Column="1"/>
+                            <TextBox Height="26"  Margin="0 5 0 0" Grid.Row="3" Grid.Column="1">
+                                <TextBox.Text>
+                                    <Binding Path="MaterialProperties.MeltingPoint" 
+                                        ValidatesOnExceptions="True" 
+                                        Mode="TwoWay"
+                                        UpdateSourceTrigger="PropertyChanged" 
+                                        ValidatesOnDataErrors="True">
+                                        <Binding.ValidationRules>
+                                            <local:InventoryValidationRule
+                                                InventoryPattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                             <TextBlock Grid.Row="3" Margin="5 12 0 0" Grid.Column="2" Text="С"/>
                         </Grid>
                     </GroupBox>
@@ -128,12 +211,38 @@
                         <TextBlock Margin="0 5 0 0" Grid.Row="0" Grid.Column="0" >
                             Скорость <LineBreak/> крышки
                         </TextBlock>
-                        <TextBox Text="{Binding VariableParameters.CoverSpeed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}" Height="22" Margin="0 5 0 0" Grid.Row="0" Grid.Column="1"/>
+                        <TextBox Height="26"  Margin="0 5 0 0" Grid.Row="0" Grid.Column="1">
+                            <TextBox.Text>
+                                <Binding Path="VariableParameters.CoverSpeed" 
+                                        ValidatesOnExceptions="True" 
+                                        Mode="TwoWay"
+                                        UpdateSourceTrigger="PropertyChanged" 
+                                        ValidatesOnDataErrors="True">
+                                    <Binding.ValidationRules>
+                                        <local:InventoryValidationRule
+                                                InventoryPattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                         <TextBlock Grid.Row="0" Margin="5 12 0 0" Grid.Column="2" Text="м/с"/>
                         <TextBlock Margin="0 5 0 0" Grid.Row="1" Grid.Column="0">
                             Температура <LineBreak/> крышки
                         </TextBlock>
-                        <TextBox Text="{Binding VariableParameters.CoverTemperature, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}" Height="22" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1"/>
+                        <TextBox Height="26" Margin="0 5 0 0" Grid.Row="1" Grid.Column="1">
+                            <TextBox.Text>
+                                <Binding Path="VariableParameters.CoverTemperature" 
+                                        ValidatesOnExceptions="True" 
+                                        Mode="TwoWay"
+                                        UpdateSourceTrigger="PropertyChanged" 
+                                        ValidatesOnDataErrors="True">
+                                    <Binding.ValidationRules>
+                                        <local:InventoryValidationRule
+                                                InventoryPattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                         <TextBlock Grid.Row="1" Margin="5 12 0 0" Grid.Column="2" Text="C"/>
                     </Grid>
                 </StackPanel>
@@ -157,30 +266,97 @@
                             <TextBlock Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" >
                             Коэффициент консистенции <LineBreak/> при температуре приведения
                             </TextBlock>
-                            <TextBox Text="{Binding EmpiricalCoeff.ConsistencyCoeff, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}" Margin="0,12,0,0" Height="22" Grid.Row="0" Grid.Column="1" />
+
+                            <TextBox Height="26" Margin="0,12,0,0" Grid.Row="0" Grid.Column="1">
+                                <TextBox.Text>
+                                    <Binding Path="EmpiricalCoeff.ConsistencyCoeff" 
+                                        ValidatesOnExceptions="True" 
+                                        Mode="TwoWay"
+                                        UpdateSourceTrigger="PropertyChanged" 
+                                        ValidatesOnDataErrors="True">
+                                        <Binding.ValidationRules>
+                                            <local:InventoryValidationRule
+                                                InventoryPattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                             <TextBlock Grid.Row="0" Margin="5 15 0 0" Grid.Column="2" Text="Па*с^n"/>
 
                             <TextBlock Margin="0,5,0,0" Grid.Row="1" Grid.Column="0" >
                             Температурный <LineBreak/> коэффициент вязкости
                             </TextBlock>
-                            <TextBox Text="{Binding EmpiricalCoeff.TemperatureCoeffViscosity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}" Margin="0,12,0,0" Height="22" Grid.Row="1" Grid.Column="1" />
+                            <TextBox Height="26" Margin="0,12,0,0" Grid.Row="1" Grid.Column="1">
+                                <TextBox.Text>
+                                    <Binding Path="EmpiricalCoeff.TemperatureCoeffViscosity" 
+                                        ValidatesOnExceptions="True" 
+                                        Mode="TwoWay"
+                                        UpdateSourceTrigger="PropertyChanged" 
+                                        ValidatesOnDataErrors="True">
+                                        <Binding.ValidationRules>
+                                            <local:InventoryValidationRule
+                                                InventoryPattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                             <TextBlock Grid.Row="1" Margin="5 15 0 0" Grid.Column="2" Text="1/C"/>
 
                             <TextBlock Margin="0,5,0,0" Grid.Row="2" Grid.Column="0" >
                             Температура приведения
                             </TextBlock>
-                            <TextBox Text="{Binding EmpiricalCoeff.CastingTemperature, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}" Margin="0,5,0,0" Height="22" Grid.Row="2" Grid.Column="1"/>
+                            <TextBox Height="26" Margin="0,5,0,0" Grid.Row="2" Grid.Column="1">
+                                <TextBox.Text>
+                                    <Binding Path="EmpiricalCoeff.CastingTemperature" 
+                                        ValidatesOnExceptions="True" 
+                                        Mode="TwoWay"
+                                        UpdateSourceTrigger="PropertyChanged" 
+                                        ValidatesOnDataErrors="True">
+                                        <Binding.ValidationRules>
+                                            <local:InventoryValidationRule
+                                                InventoryPattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                             <TextBlock Grid.Row="2" Margin="5 5 0 0" Grid.Column="2" Text="C"/>
 
                             <TextBlock Margin="0,5,0,0" Grid.Row="3" Grid.Column="0" >
                             Индекс течения
                             </TextBlock>
-                            <TextBox Text="{Binding EmpiricalCoeff.CurrentIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}" Margin="0,5,0,0" Height="22" Grid.Row="3" Grid.Column="1"/>
+
+                            <TextBox Height="26" Margin="0,5,0,0" Grid.Row="3" Grid.Column="1">
+                                <TextBox.Text>
+                                    <Binding Path="EmpiricalCoeff.CurrentIndex" 
+                                        ValidatesOnExceptions="True" 
+                                        Mode="TwoWay"
+                                        UpdateSourceTrigger="PropertyChanged" 
+                                        ValidatesOnDataErrors="True">
+                                        <Binding.ValidationRules>
+                                            <local:InventoryValidationRule
+                                                InventoryPattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
 
                             <TextBlock Margin="0,5,0,0" Grid.Row="4" Grid.Column="0" >
                             Коэффициент теплоотдачи <LineBreak/> от крышки канала к материалу
                             </TextBlock>
-                            <TextBox Text="{Binding EmpiricalCoeff.HeatTransferCoeff, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}" Margin="0,12,0,0" Height="22" Grid.Row="4" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBox  Height="26" Margin="0,12,0,0" Grid.Row="4" Grid.Column="1">
+                                <TextBox.Text>
+                                    <Binding Path="EmpiricalCoeff.HeatTransferCoeff" 
+                                        ValidatesOnExceptions="True" 
+                                        Mode="TwoWay"
+                                        UpdateSourceTrigger="PropertyChanged" 
+                                        ValidatesOnDataErrors="True">
+                                        <Binding.ValidationRules>
+                                            <local:InventoryValidationRule
+                                                InventoryPattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                             <TextBlock Grid.Row="4" Margin="5 15 0 0" Grid.Column="2" Text="Вт/(м^2*C)"/>
 
                         </Grid>
@@ -202,7 +378,20 @@
                             <TextBlock Margin="0,5,3,0" Grid.Row="0" Grid.Column="0" >
                             Шаг расчета по длине канала
                             </TextBlock>
-                            <TextBox Text="{Binding ParametersSolution.Step, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}" Grid.Row="0" Grid.Column="1" Height="22" />
+                            <TextBox  Height="26" Grid.Row="0" Grid.Column="1">
+                                <TextBox.Text>
+                                    <Binding Path="ParametersSolution.Step" 
+                                        ValidatesOnExceptions="True" 
+                                        Mode="TwoWay"
+                                        UpdateSourceTrigger="PropertyChanged" 
+                                        ValidatesOnDataErrors="True">
+                                        <Binding.ValidationRules>
+                                            <local:InventoryValidationRule
+                                                InventoryPattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                             <TextBlock Grid.Row="0" Margin="5 5 0 0" Grid.Column="2" Text="м"/>
                         </Grid>
 

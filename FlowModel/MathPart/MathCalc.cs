@@ -123,7 +123,7 @@ namespace FlowModel.MathPart
                 z += _ParametersSolution.Step;
             }
 
-            _InputParameter.Efficiency = Math.Round(_MaterialProperties.Density * _VolumeFlowRate, 2);
+            _InputParameter.Efficiency = Math.Round(_MaterialProperties.Density * _VolumeFlowRate * 3600, 2);
 
             sw.Stop();
 
