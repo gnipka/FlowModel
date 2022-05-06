@@ -1,6 +1,8 @@
-﻿using FlowModel.MathPart;
+﻿using FlowModel.InteractionDB;
+using FlowModel.MathPart;
 using FlowModel.OutputData;
 using FlowModel.Parameters;
+using FlowModel.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,14 +19,25 @@ namespace FlowModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
+        private FlowModelContext _FlowModelContext;
+
         public MainWindowViewModel()
         {
+            _FlowModelContext = new FlowModelContext();
+
+            Materials = _FlowModelContext.Material.ToList();
+
+            SelectedMaterial = Materials[0];
+
+            //FillBox();
+
             CalcMemory();
         }
 
         async void CalcMemory()
         {
-            await Task.Run(() => {
+            await Task.Run(() =>
+            {
                 while (true)
                 {
                     string prcName = Process.GetCurrentProcess().ProcessName;
@@ -33,6 +46,26 @@ namespace FlowModel
                     //MemoryParam = (int)System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / 1024;
                 }
             });
+        }
+
+        private void FillBox()
+        {
+            MaterialProperties = new MaterialProperties
+            {
+                Density = _FlowModelContext.Value_Characteristic_Material.First(x => x.ID_characteristic == _FlowModelContext.Characteristic_material.First(z => z.Name_characteristic == "Плотность").ID_characteristic && x.ID_material == SelectedMaterial.ID_material).Value_characteristic,
+                HeatCapacity = _FlowModelContext.Value_Characteristic_Material.First(x => x.ID_characteristic == _FlowModelContext.Characteristic_material.First(z => z.Name_characteristic == "Удельная теплоемкость").ID_characteristic && x.ID_material == SelectedMaterial.ID_material).Value_characteristic,
+                MeltingPoint = _FlowModelContext.Value_Characteristic_Material.First(x => x.ID_characteristic == _FlowModelContext.Characteristic_material.First(z => z.Name_characteristic == "Температура плавления").ID_characteristic && x.ID_material == SelectedMaterial.ID_material).Value_characteristic
+            };
+            EmpiricalCoeff = new EmpiricalCoeff
+            {
+                ConsistencyCoeff = _FlowModelContext.Value_Empirical_Coef.First(x => x.ID_empirical_coef == _FlowModelContext.Empirical_coef.First(z => z.Name_empirical_coef == "Коэффициент консистенции при температуре приведения").ID_empirical_coef && x.ID_material == SelectedMaterial.ID_material).Value_empirical_coef,
+                TemperatureCoeffViscosity = _FlowModelContext.Value_Empirical_Coef.First(x => x.ID_empirical_coef == _FlowModelContext.Empirical_coef.First(z => z.Name_empirical_coef == "Температурный коэффициент вязкости").ID_empirical_coef && x.ID_material == SelectedMaterial.ID_material).Value_empirical_coef,
+                CastingTemperature = _FlowModelContext.Value_Empirical_Coef.First(x => x.ID_empirical_coef == _FlowModelContext.Empirical_coef.First(z => z.Name_empirical_coef == "Температура приведения").ID_empirical_coef && x.ID_material == SelectedMaterial.ID_material).Value_empirical_coef,
+                CurrentIndex = _FlowModelContext.Value_Empirical_Coef.First(x => x.ID_empirical_coef == _FlowModelContext.Empirical_coef.First(z => z.Name_empirical_coef == "Индекс течения").ID_empirical_coef && x.ID_material == SelectedMaterial.ID_material).Value_empirical_coef,
+                HeatTransferCoeff = _FlowModelContext.Value_Empirical_Coef.First(x => x.ID_empirical_coef == _FlowModelContext.Empirical_coef.First(z => z.Name_empirical_coef == "Коэффициент теплоотдачи от крышки канала к материалу").ID_empirical_coef && x.ID_material == SelectedMaterial.ID_material).Value_empirical_coef
+            };
+
+
         }
 
         private int _MemoryParam;
@@ -48,19 +81,50 @@ namespace FlowModel
 
         #region [Input Parametrs]
 
-        private GeometricParameters _GeometricParameters = new GeometricParameters { Depth=0.009, Length=4.5, Width=0.2};
+        private List<Material> _Materials;
+        public List<Material> Materials
+        {
+            get { return _Materials; }
+            set
+            {
+                _Materials = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private Material _SelectedMaterial;
+
+        public Material SelectedMaterial
+        {
+            get
+            {
+                return _SelectedMaterial;
+            }
+            set
+            {
+                if (_SelectedMaterial != value)
+                {
+                    _SelectedMaterial = value;
+                    OnPropertyChanged();
+                    FillBox();
+                }
+            }
+        }
+
+        private GeometricParameters _GeometricParameters = new GeometricParameters { Depth=0.009, Length=4.5, Width=0.2 };
 
         public GeometricParameters GeometricParameters
-        { 
+        {
             get { return _GeometricParameters; }
-            set 
+            set
             {
                 _GeometricParameters = value;
                 OnPropertyChanged();
             }
         }
 
-        private MaterialProperties _MaterialProperties = new MaterialProperties { Density = 1060, HeatCapacity = 1200, MeltingPoint = 175};
+        private MaterialProperties _MaterialProperties = new MaterialProperties();
         public MaterialProperties MaterialProperties
         {
             get { return _MaterialProperties; }
@@ -71,7 +135,7 @@ namespace FlowModel
             }
         }
 
-        private VariableParameters _VariableParameters = new VariableParameters { CoverSpeed = 1.2, CoverTemperature = 220};
+        private VariableParameters _VariableParameters = new VariableParameters { CoverSpeed = 1.2, CoverTemperature = 220 };
         public VariableParameters VariableParameters
         {
             get { return _VariableParameters; }
@@ -82,7 +146,7 @@ namespace FlowModel
             }
         }
 
-        private EmpiricalCoeff _EmpiricalCoeff = new EmpiricalCoeff { CastingTemperature = 210, ConsistencyCoeff = 9000, CurrentIndex = 0.3, HeatTransferCoeff = 450, TemperatureCoeffViscosity = 0.02};
+        private EmpiricalCoeff _EmpiricalCoeff = new EmpiricalCoeff();
         public EmpiricalCoeff EmpiricalCoeff
         {
             get { return _EmpiricalCoeff; }
@@ -93,7 +157,7 @@ namespace FlowModel
             }
         }
 
-        private ParametersSolution _ParametersSolution = new ParametersSolution { Step = 0.1};
+        private ParametersSolution _ParametersSolution = new ParametersSolution { Step = 0.1 };
         public ParametersSolution ParametersSolution
         {
             get { return _ParametersSolution; }
@@ -150,12 +214,6 @@ namespace FlowModel
                 return _Calc ??= new RelayCommand(x =>
                 {
                     CallCalc();
-                    //MathCalc calc = new MathCalc(EmpiricalCoeff, GeometricParameters, MaterialProperties, ParametersSolution, VariableParameters);
-
-                    //calc.GetOutputParameters();                    
-
-                    //OutputParameter = calc.InputData;
-                    //Time = Math.Round(OutputParameter.Time.TotalMilliseconds, 2).ToString();
                 });
             }
         }
@@ -174,7 +232,7 @@ namespace FlowModel
             {
                 return _ShowPlot ??= new RelayCommand(x =>
                  {
-                     if(OutputParameter.ProcessStateParameters is null)
+                     if (OutputParameter.ProcessStateParameters is null)
                      {
                          CallCalc();
                      }
@@ -191,7 +249,27 @@ namespace FlowModel
                  });
             }
         }
-       
+
+        private AdminWindow? _AdminWindow = null;
+        private AdminWindowViewModel _AdminWindowViewModel;
+
+        private RelayCommand _ShowAdmin;
+
+        public RelayCommand ShowAdmin
+        {
+            get
+            {
+                return _ShowAdmin ??= new RelayCommand(x =>
+                {
+                    _AdminWindowViewModel = new AdminWindowViewModel();
+                    _AdminWindow = new AdminWindow();
+                    _AdminWindow.DataContext = _AdminWindowViewModel;
+                    _AdminWindow.Show();
+
+                });
+            }
+        }
+
 
         private RelayCommand _Export;
 
@@ -216,7 +294,7 @@ namespace FlowModel
 
                     string path = Path.Combine(directory.FullName, $"Отчет №1. {DateTime.Today.ToShortDateString()}.xlsx");
                     var file = new FileInfo(Path.Combine(directory.FullName, path));
-                    
+
                     int num = 1;
                     while (file.Exists)
                     {
@@ -236,7 +314,7 @@ namespace FlowModel
                             ExportExcel.Save(path);
                             break;
                         case MessageBoxResult.No:
-                            ExportExcel.SaveAndClose(path);                                                    
+                            ExportExcel.SaveAndClose(path);
                             break;
                     }
                 });

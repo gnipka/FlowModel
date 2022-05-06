@@ -136,8 +136,8 @@
 
                             <TextBlock Grid.Row="0" Margin="0 2 0 0" Text="Материал" Grid.Column="0"/>
 
-                            <ComboBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource MaterialDesignComboBox}">
-                                <ComboBoxItem Content="Полистирол" IsSelected="True"/>
+                            <ComboBox SelectedItem="{Binding SelectedMaterial}" ItemsSource="{Binding Materials}" DisplayMemberPath="Name_material"  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource MaterialDesignComboBox}">  
+                                
                             </ComboBox>
 
                             <TextBlock Margin="0 5 0 0" Grid.Row="1" Grid.Column="0" Text="Плотность"/>
@@ -400,6 +400,7 @@
                     <Button Command="{Binding Calc}" Margin="10 16 10 0" Content="Расчет" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
 
                     <Button Command="{Binding Export}" Margin="10 16 10 0" Content="Сохранить отчет" Style="{DynamicResource MaterialDesignFlatLightBgButton}"/>
+                    <Button Command="{Binding ShowAdmin}" Margin="10 16 10 0" Content="Тест" Style="{DynamicResource MaterialDesignFlatLightBgButton}"/>
 
                 </StackPanel>
 

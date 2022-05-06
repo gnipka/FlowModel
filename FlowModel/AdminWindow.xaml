@@ -1,0 +1,65 @@
+﻿<Window x:Class="FlowModel.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FlowModel" xmlns:viewmodels="clr-namespace:FlowModel.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:AdminWindowViewModel}"
+        mc:Ignorable="d"
+        Title="AdminWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TabControl Grid.Column="0" Style="{DynamicResource  MaterialDesignNavigatilRailTabControl}">
+            <TabItem Header="Материалы" Width="230">
+                <TabItem.Content>
+                    <DataGrid ItemsSource= "{Binding Material}" Style="{DynamicResource MaterialDesignDataGrid}" GridLinesVisibility="Vertical" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID материала" Binding="{Binding id_material}"/>
+                            <DataGridTextColumn Header="Материал" Binding="{Binding Name}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Header="Характеристики материалов" Width="230">
+                <TabItem.Content>
+                    <DataGrid ItemsSource="{Binding CharacteristicMaterial}" Style="{DynamicResource MaterialDesignDataGrid}" GridLinesVisibility="Vertical" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID характеристики материала" Binding="{Binding ID_characteristic}"/>
+                            <DataGridTextColumn Header="Характеристика материала" Binding="{Binding name}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Header="Эмпирические коэффициенты" Width="230">
+                <TabItem.Content>
+                    <DataGrid ItemsSource="{Binding EmpiricalCoef}" Style="{DynamicResource MaterialDesignDataGrid}" GridLinesVisibility="Vertical" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID эпирического коэффициента" Binding="{Binding ID_empirical_coef}"/>
+                            <DataGridTextColumn Header="Эмпирический коэффициент" Binding="{Binding name}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Header="Значения свойств материала" Width="230">
+                <TabItem.Content>
+                    <DataGrid ItemsSource="{Binding ValueCharacteristicMaterial}"  Style="{DynamicResource MaterialDesignDataGrid}" GridLinesVisibility="Vertical" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="ID материала" Binding="{Binding Id_material}"/>
+                            <DataGridTextColumn Header="материал" Binding="{Binding Material.Name}"/>
+                            <DataGridTextColumn Header="ID характеристики" Binding="{Binding Id_characteristic}"/>
+                            <DataGridTextColumn Header="Значение" Binding="{Binding Value}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+        <StackPanel Grid.Column="1">
+            <Button Content="Добавить" Margin="5" Style="{DynamicResource MaterialDesignFlatLightBgButton}"/>
+            <Button Content="Изменить" Margin="5" Style="{DynamicResource MaterialDesignFlatLightBgButton}"/>
+            <Button Content="Удалить" Margin="5" Style="{DynamicResource MaterialDesignFlatLightBgButton}"/>
+        </StackPanel>
+    </Grid>
+</Window>
