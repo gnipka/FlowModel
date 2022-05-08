@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:FlowModel"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:col="clr-namespace:System.Collections;assembly=mscorlib" 
-        Title="AuthWindow" Height="350" Width="600">
-    <Grid Background="#B39ECC">
+        Title="Авторизация" Height="350" Width="600">
+    <Grid>
         <Border MinWidth="400" Margin="15" Background="White" VerticalAlignment ="Center" Padding="30" MaxWidth="550" CornerRadius="20">
             <Border.Effect>
-                <DropShadowEffect BlurRadius="30" Color="#A98ECC" ShadowDepth="0"/>
+                <DropShadowEffect Color="Gray" ShadowDepth="0"/>
             </Border.Effect>
             <StackPanel>
                 <!-- StackPanel что-то вроде сетки, FontSize размер шрифта FontWeight жирность-->

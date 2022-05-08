@@ -9,6 +9,7 @@ namespace FlowModel.InteractionDB
         /// ID для значения характеристики
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// ID материала
         /// </summary>

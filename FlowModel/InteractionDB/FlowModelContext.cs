@@ -15,6 +15,7 @@ namespace FlowModel.InteractionDB
         public DbSet<ValueEmpiricalCoef> Value_Empirical_Coef { get; set; }
         public DbSet<ValueCharacteristicMaterial> Value_Characteristic_Material { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Unit> Unit { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

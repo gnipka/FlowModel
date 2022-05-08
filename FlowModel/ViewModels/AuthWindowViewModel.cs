@@ -5,7 +5,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using WPF_MVVM_Classes;
 
 namespace FlowModel.ViewModels
@@ -17,8 +19,8 @@ namespace FlowModel.ViewModels
         public AuthWindowViewModel()
         {
             _FlowModelContext = new FlowModelContext();
-            BrushesLogin = Color.Gray.Name.ToString();
-            BrushesPass = Color.Gray.Name.ToString();
+            BrushesLogin = System.Drawing.Color.Gray.Name.ToString();
+            BrushesPass = System.Drawing.Color.Gray.Name.ToString();
         }
 
         private string _Login;
@@ -39,28 +41,6 @@ namespace FlowModel.ViewModels
             set
             {
                 _Pass = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _ErrorLogin;
-        public string ErrorLogin
-        {
-            get { return _ErrorLogin; }
-            set
-            {
-                _ErrorLogin = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _ErrorPass;
-        public string ErrorPass
-        {
-            get { return _ErrorPass; }
-            set
-            {
-                _ErrorPass = value;
                 OnPropertyChanged();
             }
         }
@@ -105,34 +85,48 @@ namespace FlowModel.ViewModels
                     var user = _FlowModelContext.User.ToList().FirstOrDefault(x => x.Login == Login && x.Pass == Pass);
                     if (user is not null)
                     {
-                        if(user.Role == "researcher")
+                        if(user.Role == "Исследователь")
                         {
                             _MainWindowViewModel = new MainWindowViewModel();
                             _MainWindow = new MainWindow();
                             _MainWindow.DataContext = _MainWindowViewModel;
-                            _MainWindow.Show();                            
+                            _MainWindow.Show();
+                            var parent = VisualTreeHelper.GetParent(passBox);
+                            while (!(parent is Window))
+                            {
+                                parent = VisualTreeHelper.GetParent(parent);
+                            }
+                            ((Window)parent).Close();
                         }
 
-                        else if(user.Role == "admin")
+                        else if(user.Role == "Администратор")
                         {
                             _AdminWindowViewModel = new AdminWindowViewModel();
                             _AdminWindow = new AdminWindow();
                             _AdminWindow.DataContext = _AdminWindowViewModel;
                             _AdminWindow.Show();
+                            var parent = VisualTreeHelper.GetParent(passBox);
+                            while (!(parent is Window))
+                            {
+                                parent = VisualTreeHelper.GetParent(parent);
+                            }
+                            ((Window)parent).Close();
                         }
                     }
 
-                    else if (_FlowModelContext.User.ToList().FirstOrDefault(x => x.Login == Login ) is null)
+                    if (_FlowModelContext.User.ToList().FirstOrDefault(x => x.Login == Login ) is null)
                     {
-                        ErrorLogin = "Логин введен неверное";
-                        BrushesLogin = Color.Red.Name.ToString();
+                        BrushesLogin = System.Drawing.Color.Red.Name.ToString();
                     }
+                    else
+                        BrushesLogin = System.Drawing.Color.Gray.Name.ToString();
 
-                    else if (_FlowModelContext.User.ToList().FirstOrDefault(x => x.Login == Login) is null)
+                    if (_FlowModelContext.User.ToList().FirstOrDefault(x => x.Pass == Pass) is null)
                     {
-                        ErrorLogin = "Пароль введен неверное";
-                        BrushesPass = Color.Red.Name.ToString();
+                        BrushesPass = System.Drawing.Color.Red.Name.ToString();
                     }
+                    else
+                        BrushesPass = System.Drawing.Color.Gray.Name.ToString();
                 });
             }
         }

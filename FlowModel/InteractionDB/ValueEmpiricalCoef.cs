@@ -9,6 +9,7 @@ namespace FlowModel.InteractionDB
         /// ID значения эмпирического коэффициента
         /// </summary>
         public int ID { get; set; }
+
         /// <summary>
         /// ID материала
         /// </summary>

@@ -17,6 +17,11 @@ namespace FlowModel.InteractionDB
         /// </summary>
         public string Name_characteristic { get; set; }
 
+        /// <summary>
+        /// ID единицы измерения
+        /// </summary>
+        public int ID_unit { get; set; }
+
         //public virtual ICollection<ValueCharacteristicMaterial>
         //    ValueCharacteristicMaterials
         //{ get; private set; } =

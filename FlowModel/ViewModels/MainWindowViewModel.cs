@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 using WPF_MVVM_Classes;
 
 namespace FlowModel
@@ -270,6 +271,27 @@ namespace FlowModel
             }
         }
 
+        private AuthWindow? _AuthWindow = null;
+        private AuthWindowViewModel _AuthWindowViewModel;
+
+        private RelayCommand _ShowAuth;
+
+        public RelayCommand ShowAuth
+        {
+            get
+            {
+                return _ShowAuth ??= new RelayCommand(x =>
+                {
+                    _AuthWindowViewModel = new AuthWindowViewModel();
+                    _AuthWindow = new AuthWindow();
+                    _AuthWindow.DataContext = _AuthWindowViewModel;
+                    _AuthWindow.Show();
+
+
+                    ((Window)x).Hide();                    
+                });
+            }
+        }
 
         private RelayCommand _Export;
 
