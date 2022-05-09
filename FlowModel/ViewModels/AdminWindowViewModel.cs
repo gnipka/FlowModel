@@ -31,15 +31,49 @@ namespace FlowModel.ViewModels
             Material = _FlowModelContext.Material.ToList();
             _FlowModelContext.Unit.Load();
             Unit = _FlowModelContext.Unit.ToList();
+
             _FlowModelContext.Empirical_coef.Load();
             EmpiricalCoef = _FlowModelContext.Empirical_coef.ToList();
 
             EmpiricalCoefUser = new List<EmpiricalCoefUser>();
             foreach (var item in EmpiricalCoef)
-            {                
+            {
                 var empty = new EmpiricalCoefUser { ID_empirical_coef = item.ID_empirical_coef, Name_empirical_coef = item.Name_empirical_coef, Name_unit = Unit.FirstOrDefault(x => x.ID_unit == item.ID_unit).Name_unit };
 
                 EmpiricalCoefUser.Add(empty);
+            }
+
+            _FlowModelContext.Characteristic_material.Load();
+            CharacteristicMaterial = _FlowModelContext.Characteristic_material.ToList();
+
+            CharacteristicMaterialUser = new List<CharacteristicMaterialUser>();
+            foreach (var item in CharacteristicMaterial)
+            {
+                var empty = new CharacteristicMaterialUser { ID_characteristic = item.ID_characteristic, Name_characteristic = item.Name_characteristic, Name_unit = Unit.FirstOrDefault(x => x.ID_unit == item.ID_unit).Name_unit };
+
+                CharacteristicMaterialUser.Add(empty);
+            }
+
+            _FlowModelContext.Value_Characteristic_Material.Load();
+            ValueCharacteristicMaterial = _FlowModelContext.Value_Characteristic_Material.ToList();
+
+            ValueCharacteristicMaterialUser = new List<ValueCharacteristicMaterialUser>();
+            foreach (var item in ValueCharacteristicMaterial)
+            {
+                var empty = new ValueCharacteristicMaterialUser { Id = item.Id, Name_characteristic = CharacteristicMaterial.FirstOrDefault(x => x.ID_characteristic == item.ID_characteristic).Name_characteristic, Name_material = Material.FirstOrDefault(x => x.ID_material == item.ID_material).Name_material, Value_characteristic = item.Value_characteristic };
+
+                ValueCharacteristicMaterialUser.Add(empty);
+            }
+
+            _FlowModelContext.Value_Empirical_Coef.Load();
+            ValueEmpiricalCoef = _FlowModelContext.Value_Empirical_Coef.ToList();
+
+            ValueEmpiricalCoefUser = new List<ValueEmpiricalCoefUser>();
+            foreach (var item in ValueEmpiricalCoef)
+            {
+                var empty = new ValueEmpiricalCoefUser { ID = item.ID, Name_empirical_coef = EmpiricalCoef.FirstOrDefault(x => x.ID_empirical_coef == item.ID_empirical_coef).Name_empirical_coef, Name_material = Material.FirstOrDefault(x => x.ID_material == item.ID_material).Name_material, Value_empirical_coef = item.Value_empirical_coef };
+
+                ValueEmpiricalCoefUser.Add(empty);
             }
         }
 
@@ -127,7 +161,7 @@ namespace FlowModel.ViewModels
                         Advertisement();
                     }
                     else
-                        MessageBox.Show("Выберите строку, которую следует изменить", "Ошибка при изменении записи");
+                        MessageBox.Show("Выберите строку, которую следует изменить или проверьте, что все поля заполнены", "Ошибка при изменении записи");
                 });
             }
         }
@@ -239,7 +273,7 @@ namespace FlowModel.ViewModels
                         Advertisement();
                     }
                     else
-                        MessageBox.Show("Выберите строку, которую следует изменить", "Ошибка при изменении записи");
+                        MessageBox.Show("Выберите строку, которую следует изменить или проверьте, что все поля заполнены", "Ошибка при изменении записи");
                 });
             }
         }
@@ -391,7 +425,7 @@ namespace FlowModel.ViewModels
                         Advertisement();
                     }
                     else
-                        MessageBox.Show("Выберите строку, которую следует изменить", "Ошибка при изменении записи");
+                        MessageBox.Show("Выберите строку, которую следует изменить или проверьте, что все поля заполнены", "Ошибка при изменении записи");
                 });
             }
         }
@@ -419,7 +453,6 @@ namespace FlowModel.ViewModels
         }
 
         #endregion
-
 
         #region EmpiricalCoefConnectDB
 
@@ -529,7 +562,7 @@ namespace FlowModel.ViewModels
                         Advertisement();
                     }
                     else
-                        MessageBox.Show("Выберите строку, которую следует изменить", "Ошибка при изменении записи");
+                        MessageBox.Show("Выберите строку, которую следует изменить или проверьте, что все поля заполнены", "Ошибка при изменении записи");
                 });
             }
         }
@@ -560,6 +593,8 @@ namespace FlowModel.ViewModels
 
         #endregion
 
+        #region CharacteristicMaterialConnectDB
+
         private List<CharacteristicMaterial> _CharacteristicMaterial;
         public List<CharacteristicMaterial> CharacteristicMaterial
         {
@@ -571,6 +606,133 @@ namespace FlowModel.ViewModels
             }
         }
 
+        private List<CharacteristicMaterialUser> _CharacteristicMaterialUser;
+        public List<CharacteristicMaterialUser> CharacteristicMaterialUser
+        {
+            get { return _CharacteristicMaterialUser; }
+            set
+            {
+                _CharacteristicMaterialUser = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private CharacteristicMaterialUser _SelectedCharacteristicMaterialUser;
+        public CharacteristicMaterialUser SelectedCharacteristicMaterialUser
+        {
+            get { return _SelectedCharacteristicMaterialUser; }
+            set
+            {
+                _SelectedCharacteristicMaterialUser = value;
+                OnPropertyChanged();
+                if (_SelectedCharacteristicMaterialUser is not null)
+                {
+                    NameCharacteristicMaterial = _SelectedCharacteristicMaterialUser.Name_characteristic;
+                    NameUnitCharacteristic = Unit.FirstOrDefault(x => x.Name_unit == SelectedCharacteristicMaterialUser.Name_unit);
+                }
+            }
+        }
+
+        private string _NameCharacteristicMaterial;
+        public string NameCharacteristicMaterial
+        {
+            get { return _NameCharacteristicMaterial; }
+            set
+            {
+                _NameCharacteristicMaterial = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Unit _NameUnitCharacteristic;
+        public Unit NameUnitCharacteristic
+        {
+            get { return _NameUnitCharacteristic; }
+            set
+            {
+                _NameUnitCharacteristic = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private RelayCommand _AddCharacteristicMaterial;
+
+        public RelayCommand AddCharacteristicMaterial
+        {
+            get
+            {
+                return _AddCharacteristicMaterial ??= new RelayCommand(x =>
+                {
+                    if (NameCharacteristicMaterial != string.Empty && NameUnitCharacteristic is not null)
+                    {
+                        var varCharacteristicMaterial = new CharacteristicMaterial(NameCharacteristicMaterial, NameUnitCharacteristic.ID_unit);
+
+                        var CRUD = new CharacteristicMaterialCRUD();
+
+                        CRUD.Create(varCharacteristicMaterial);
+
+                        Advertisement();
+                    }
+                    else
+                        MessageBox.Show("Заполните все поля, чтобы добавить новую запись", "Ошибка при добавлении записи");
+                });
+            }
+        }
+
+        private RelayCommand _UpdateCharacteristicMaterial;
+
+        public RelayCommand UpdateCharacteristicMaterial
+        {
+            get
+            {
+                return _UpdateCharacteristicMaterial ??= new RelayCommand(x =>
+                {
+
+                    if (NameCharacteristicMaterial != string.Empty && NameUnitCharacteristic is not null)
+                    {
+
+                        var varCharacteristicMaterial = new CharacteristicMaterial(SelectedCharacteristicMaterialUser.ID_characteristic, NameCharacteristicMaterial, NameUnitCharacteristic.ID_unit);
+
+                        var CRUD = new CharacteristicMaterialCRUD();
+
+                        CRUD.Update(varCharacteristicMaterial);
+
+                        Advertisement();
+                    }
+                    else
+                        MessageBox.Show("Выберите строку, которую следует изменить или проверьте, что все поля заполнены", "Ошибка при изменении записи");
+                });
+            }
+        }
+
+        private RelayCommand _RemoveCharacteristicMaterial;
+
+        public RelayCommand RemoveCharacteristicMaterial
+        {
+            get
+            {
+                return _RemoveCharacteristicMaterial ??= new RelayCommand(x =>
+                {
+                    if (NameCharacteristicMaterial != string.Empty && NameUnitCharacteristic is not null)
+                    {
+                        var CRUD = new CharacteristicMaterialCRUD();
+
+                        var varCharacteristicMaterial = new CharacteristicMaterial(SelectedCharacteristicMaterialUser.ID_characteristic, SelectedCharacteristicMaterialUser.Name_characteristic, Unit.FirstOrDefault(x => x.Name_unit == SelectedCharacteristicMaterialUser.Name_unit).ID_unit);
+
+                        CRUD.Delete(varCharacteristicMaterial);
+
+                        Advertisement();
+                    }
+                    else
+                        MessageBox.Show("Выберите строку, которую следует удалить", "Ошибка при удалении записи");
+                });
+            }
+        }
+
+        #endregion
+
+        #region ValueCharacteristicMaterialConnectDB
 
         private List<ValueCharacteristicMaterial> _ValueCharacteristicMaterial;
         public List<ValueCharacteristicMaterial> ValueCharacteristicMaterial
@@ -583,6 +745,141 @@ namespace FlowModel.ViewModels
             }
         }
 
+        private List<ValueCharacteristicMaterialUser> _ValueCharacteristicMaterialUser;
+        public List<ValueCharacteristicMaterialUser> ValueCharacteristicMaterialUser
+        {
+            get { return _ValueCharacteristicMaterialUser; }
+            set
+            {
+                _ValueCharacteristicMaterialUser = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ValueCharacteristicMaterialUser _SelectedValueCharacteristicMaterialUser;
+        public ValueCharacteristicMaterialUser SelectedValueCharacteristicMaterialUser
+        {
+            get { return _SelectedValueCharacteristicMaterialUser; }
+            set
+            {
+                _SelectedValueCharacteristicMaterialUser = value;
+                OnPropertyChanged();
+                if (_SelectedValueCharacteristicMaterialUser is not null)
+                {
+                    NameMaterialCharacteristic = Material.FirstOrDefault(x => x.Name_material == _SelectedValueCharacteristicMaterialUser.Name_material);
+                    NameCharacteristicValue = CharacteristicMaterial.FirstOrDefault(x => x.Name_characteristic == _SelectedValueCharacteristicMaterialUser.Name_characteristic);
+                    ValueCharacteristic = _SelectedValueCharacteristicMaterialUser.Value_characteristic;
+                }
+            }
+        }
+
+        private Material _NameMaterialCharacteristic;
+        public Material NameMaterialCharacteristic
+        {
+            get { return _NameMaterialCharacteristic; }
+            set
+            {
+                _NameMaterialCharacteristic = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private CharacteristicMaterial _NameCharacteristicValue;
+        public CharacteristicMaterial NameCharacteristicValue
+        {
+            get { return _NameCharacteristicValue; }
+            set
+            {
+                _NameCharacteristicValue = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private double _ValueCharacteristic;
+        public double ValueCharacteristic
+        {
+            get { return _ValueCharacteristic; }
+            set { _ValueCharacteristic = value; OnPropertyChanged(); }
+        }
+
+        private RelayCommand _AddCharacteristicMaterialValue;
+
+        public RelayCommand AddCharacteristicMaterialValue
+        {
+            get
+            {
+                return _AddCharacteristicMaterialValue ??= new RelayCommand(x =>
+                {
+                    if (ValueCharacteristic.ToString() != string.Empty && NameCharacteristicValue is not null && NameMaterialCharacteristic is not null)
+                    {
+                        var varCharacteristicMaterialValue = new ValueCharacteristicMaterial(NameMaterialCharacteristic.ID_material, NameCharacteristicValue.ID_characteristic, ValueCharacteristic);
+
+                        var CRUD = new ValueCharacteristicMaterialCRUD();
+
+                        CRUD.Create(varCharacteristicMaterialValue);
+
+                        Advertisement();
+                    }
+                    else
+                        MessageBox.Show("Заполните все поля, чтобы добавить новую запись", "Ошибка при добавлении записи");
+                });
+            }
+        }
+
+        private RelayCommand _UpdateCharacteristicMaterialValue;
+
+        public RelayCommand UpdateCharacteristicMaterialValue
+        {
+            get
+            {
+                return _UpdateCharacteristicMaterialValue ??= new RelayCommand(x =>
+                {
+
+                    if (ValueCharacteristic.ToString() != string.Empty && NameCharacteristicValue is not null && NameMaterialCharacteristic is not null)
+                    {
+
+                        var varCharacteristicMaterialValue = new ValueCharacteristicMaterial(SelectedValueCharacteristicMaterialUser.Id, NameMaterialCharacteristic.ID_material, NameCharacteristicValue.ID_characteristic, ValueCharacteristic);
+
+                        var CRUD = new ValueCharacteristicMaterialCRUD();
+
+                        CRUD.Update(varCharacteristicMaterialValue);
+
+                        Advertisement();
+                    }
+                    else
+                        MessageBox.Show("Выберите строку, которую следует изменить или проверьте, что все поля заполнены", "Ошибка при изменении записи");
+                });
+            }
+        }
+
+        private RelayCommand _RemoveCharacteristicMaterialValue;
+
+        public RelayCommand RemoveCharacteristicMaterialValue
+        {
+            get
+            {
+                return _RemoveCharacteristicMaterialValue ??= new RelayCommand(x =>
+                {
+                    if (ValueCharacteristic.ToString() != string.Empty && NameCharacteristicValue is not null && NameMaterialCharacteristic is not null)
+                    {
+                        var CRUD = new ValueCharacteristicMaterialCRUD();
+
+                        var varCharacteristicMaterialValue = new ValueCharacteristicMaterial(SelectedValueCharacteristicMaterialUser.Id, Material.FirstOrDefault(x => x.Name_material == SelectedValueCharacteristicMaterialUser.Name_material).ID_material, CharacteristicMaterial.FirstOrDefault(x => x.Name_characteristic == SelectedValueCharacteristicMaterialUser.Name_characteristic).ID_characteristic, SelectedValueCharacteristicMaterialUser.Value_characteristic);
+
+                        CRUD.Delete(varCharacteristicMaterialValue);
+
+                        Advertisement();
+                    }
+                    else
+                        MessageBox.Show("Выберите строку, которую следует удалить", "Ошибка при удалении записи");
+                });
+            }
+        }
+
+        #endregion
+
+        #region ValueEmpiricalCoeflConnectDB
+
         private List<ValueEmpiricalCoef> _ValueEmpiricalCoef;
         public List<ValueEmpiricalCoef> ValueEmpiricalCoef
         {
@@ -593,6 +890,138 @@ namespace FlowModel.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private List<ValueEmpiricalCoefUser> _ValueEmpiricalCoefUser;
+        public List<ValueEmpiricalCoefUser> ValueEmpiricalCoefUser
+        {
+            get { return _ValueEmpiricalCoefUser; }
+            set
+            {
+                _ValueEmpiricalCoefUser = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ValueEmpiricalCoefUser _SelectedValueEmpiricalCoefUser;
+        public ValueEmpiricalCoefUser SelectedValueEmpiricalCoefUser
+        {
+            get { return _SelectedValueEmpiricalCoefUser; }
+            set
+            {
+                _SelectedValueEmpiricalCoefUser = value;
+                OnPropertyChanged();
+                if (_SelectedValueEmpiricalCoefUser is not null)
+                {
+                    NameMaterialEmpiricalCoef = Material.FirstOrDefault(x => x.Name_material == _SelectedValueEmpiricalCoefUser.Name_material);
+                    NameEmpiricalCoefValue = EmpiricalCoef.FirstOrDefault(x => x.Name_empirical_coef == _SelectedValueEmpiricalCoefUser.Name_empirical_coef);
+                    ValueEmpiricalCoefMaterial = _SelectedValueEmpiricalCoefUser.Value_empirical_coef;
+                }
+            }
+        }
+
+        private Material _NameMaterialEmpiricalCoef;
+        public Material NameMaterialEmpiricalCoef
+        {
+            get { return _NameMaterialEmpiricalCoef; }
+            set
+            {
+                _NameMaterialEmpiricalCoef = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private EmpiricalCoef _NameEmpiricalCoefValue;
+        public EmpiricalCoef NameEmpiricalCoefValue
+        {
+            get { return _NameEmpiricalCoefValue; }
+            set
+            {
+                _NameEmpiricalCoefValue = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private double _ValueEmpiricalCoefMaterial;
+        public double ValueEmpiricalCoefMaterial
+        {
+            get { return _ValueEmpiricalCoefMaterial; }
+            set { _ValueEmpiricalCoefMaterial = value; OnPropertyChanged(); }
+        }
+
+        private RelayCommand _AddEmpiricalCoefValue;
+
+        public RelayCommand AddEmpiricalCoefValue
+        {
+            get
+            {
+                return _AddEmpiricalCoefValue ??= new RelayCommand(x =>
+                {
+                    if (ValueEmpiricalCoefMaterial.ToString() != string.Empty && NameMaterialEmpiricalCoef is not null && NameEmpiricalCoefValue is not null)
+                    {
+                        var varEmpiricalCoefValue = new ValueEmpiricalCoef(NameMaterialEmpiricalCoef.ID_material, NameEmpiricalCoefValue.ID_empirical_coef, ValueEmpiricalCoefMaterial);
+
+                        var CRUD = new ValueEmpiricalCoefCRUD();
+
+                        CRUD.Create(varEmpiricalCoefValue);
+
+                        Advertisement();
+                    }
+                    else
+                        MessageBox.Show("Заполните все поля, чтобы добавить новую запись", "Ошибка при добавлении записи");
+                });
+            }
+        }
+
+        private RelayCommand _UpdateEmpiricalCoefValue;
+
+        public RelayCommand UpdateEmpiricalCoefValue
+        {
+            get
+            {
+                return _UpdateEmpiricalCoefValue ??= new RelayCommand(x =>
+                {
+
+                    if (ValueEmpiricalCoefMaterial.ToString() != string.Empty && NameMaterialEmpiricalCoef is not null && NameEmpiricalCoefValue is not null)
+                    {
+                        var varEmpiricalCoefValue = new ValueEmpiricalCoef(SelectedValueEmpiricalCoefUser.ID, NameMaterialEmpiricalCoef.ID_material, NameEmpiricalCoefValue.ID_empirical_coef, ValueEmpiricalCoefMaterial);
+
+                        var CRUD = new ValueEmpiricalCoefCRUD();
+
+                        CRUD.Update(varEmpiricalCoefValue);
+
+                        Advertisement();
+                    }
+                    else
+                        MessageBox.Show("Выберите строку, которую следует изменить или проверьте, что все поля заполнены", "Ошибка при изменении записи");
+                });
+            }
+        }
+
+        private RelayCommand _RemoveEmpiricalCoefValue;
+
+        public RelayCommand RemoveEmpiricalCoefValue
+        {
+            get
+            {
+                return _RemoveEmpiricalCoefValue ??= new RelayCommand(x =>
+                {
+                    if (ValueEmpiricalCoefMaterial.ToString() != string.Empty && NameMaterialEmpiricalCoef is not null && NameEmpiricalCoefValue is not null)
+                    {
+                        var CRUD = new ValueEmpiricalCoefCRUD();
+
+                        var varEmpiricalCoefValue = new ValueEmpiricalCoef(SelectedValueEmpiricalCoefUser.ID, Material.FirstOrDefault(x => x.Name_material == SelectedValueEmpiricalCoefUser.Name_material).ID_material, EmpiricalCoef.FirstOrDefault(x => x.Name_empirical_coef == SelectedValueEmpiricalCoefUser.Name_empirical_coef).ID_empirical_coef, SelectedValueEmpiricalCoefUser.Value_empirical_coef);
+
+                        CRUD.Delete(varEmpiricalCoefValue);
+
+                        Advertisement();
+                    }
+                    else
+                        MessageBox.Show("Выберите строку, которую следует удалить", "Ошибка при удалении записи");
+                });
+            }
+        }
+
+        #endregion
 
         private AuthWindow? _AuthWindow = null;
         private AuthWindowViewModel _AuthWindowViewModel;

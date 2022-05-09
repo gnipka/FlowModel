@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FlowModel.InteractionDB
+﻿namespace FlowModel.InteractionDB
 {
     internal class EmpiricalCoefUser
     {
@@ -21,6 +15,6 @@ namespace FlowModel.InteractionDB
         /// <summary>
         /// ID единицы измерения
         /// </summary>
-        public string? Name_unit { get; set; }
+        public string Name_unit { get; set; }
     }
 }
