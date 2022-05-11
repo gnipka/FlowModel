@@ -1,10 +1,5 @@
 ﻿using FlowModel.InteractionDB;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -85,7 +80,7 @@ namespace FlowModel.ViewModels
                     var user = _FlowModelContext.User.ToList().FirstOrDefault(x => x.Login == Login && x.Pass == Pass);
                     if (user is not null)
                     {
-                        if(user.Role == "Исследователь")
+                        if (user.Role == "Исследователь")
                         {
                             _MainWindowViewModel = new MainWindowViewModel();
                             _MainWindow = new MainWindow();
@@ -99,7 +94,7 @@ namespace FlowModel.ViewModels
                             ((Window)parent).Close();
                         }
 
-                        else if(user.Role == "Администратор")
+                        else if (user.Role == "Администратор")
                         {
                             _AdminWindowViewModel = new AdminWindowViewModel();
                             _AdminWindow = new AdminWindow();
@@ -114,19 +109,22 @@ namespace FlowModel.ViewModels
                         }
                     }
 
-                    if (_FlowModelContext.User.ToList().FirstOrDefault(x => x.Login == Login ) is null)
+                    if (!(_FlowModelContext.User.ToList().FirstOrDefault(x => x.Login == Login) is null))
                     {
-                        BrushesLogin = System.Drawing.Color.Red.Name.ToString();
-                    }
-                    else
                         BrushesLogin = System.Drawing.Color.Gray.Name.ToString();
 
-                    if (_FlowModelContext.User.ToList().FirstOrDefault(x => x.Pass == Pass) is null)
-                    {
-                        BrushesPass = System.Drawing.Color.Red.Name.ToString();
+                        if (_FlowModelContext.User.ToList().FirstOrDefault(x => x.Pass == Pass) is null)
+                        {
+                            BrushesPass = System.Drawing.Color.Red.Name.ToString();
+                        }
+                        else
+                            BrushesPass = System.Drawing.Color.Gray.Name.ToString();
                     }
                     else
-                        BrushesPass = System.Drawing.Color.Gray.Name.ToString();
+                    {
+                        BrushesPass = System.Drawing.Color.Red.Name.ToString();
+                        BrushesLogin = System.Drawing.Color.Red.Name.ToString();
+                    }
                 });
             }
         }

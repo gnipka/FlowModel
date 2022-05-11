@@ -5,7 +5,6 @@ using FlowModel.Parameters;
 using FlowModel.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -13,7 +12,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Media;
 using WPF_MVVM_Classes;
 
@@ -290,7 +288,7 @@ namespace FlowModel
                     _AuthWindow.Show();
 
 
-                    ((Window)x).Hide();                    
+                    ((Window)x).Hide();
                 });
             }
         }

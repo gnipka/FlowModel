@@ -124,7 +124,7 @@ namespace FlowModel.ViewModels
             {
                 return _AddMaterial ??= new RelayCommand(x =>
                 {
-                    if (NewMaterial != string.Empty)
+                    if (NewMaterial != string.Empty && NewMaterial != "" && NewMaterial != null)
                     {
                         var varMaterial = new Material(NewMaterial);
 
@@ -176,10 +176,19 @@ namespace FlowModel.ViewModels
                 {
                     if (SelectedItem is not null)
                     {
-                        var CRUD = new MaterialCRUD();
+                        if (ValueCharacteristicMaterial.FirstOrDefault(x => x.ID_material == SelectedItem.ID_material) is null &&  ValueEmpiricalCoef.FirstOrDefault(x => x.ID_material == SelectedItem.ID_material) is null)
+                        {
+                            var CRUD = new MaterialCRUD();
 
-                        CRUD.Delete(SelectedItem);
+                            CRUD.Delete(SelectedItem);
 
+                            Advertisement();
+                        }
+
+                        else
+                        {
+                            MessageBox.Show("Выбранная запись используется в другой таблице. Вы не можете ее удалить.", "Ошибка при удалении записи");
+                        }
                         Advertisement();
                     }
                     else
@@ -236,7 +245,7 @@ namespace FlowModel.ViewModels
             {
                 return _AddUnit ??= new RelayCommand(x =>
                 {
-                    if (NewUnit != string.Empty)
+                    if (NewUnit != string.Empty && NewUnit != "" && NewUnit != null)
                     {
                         var varUnit = new Unit(NewUnit);
 
@@ -288,9 +297,15 @@ namespace FlowModel.ViewModels
                 {
                     if (SelectedUnit is not null)
                     {
-                        var CRUD = new UnitCRUD();
+                        if(EmpiricalCoef.FirstOrDefault(x => x.ID_unit == SelectedUnit.ID_unit) is null && CharacteristicMaterial.FirstOrDefault(x => x.ID_unit == SelectedUnit.ID_unit) is null)
+                        {
+                            var CRUD = new UnitCRUD();
 
-                        CRUD.Delete(SelectedUnit);
+                            CRUD.Delete(SelectedUnit);
+                        }
+                        
+                        else
+                            MessageBox.Show("Выбранная запись используется в другой таблице. Вы не можете ее удалить.", "Ошибка при удалении записи");
 
                         Advertisement();
                     }
@@ -388,7 +403,7 @@ namespace FlowModel.ViewModels
             {
                 return _AddUser ??= new RelayCommand(x =>
                 {
-                    if (NewLogin != string.Empty && NewPass != string.Empty && NewRole != string.Empty)
+                    if (NewLogin != string.Empty && NewLogin != "" && NewLogin != null && NewPass != string.Empty && NewPass != "" && NewPass != null && NewRole != string.Empty && NewRole != "" && NewRole != null)
                     {
                         var varUser = new User(NewLogin, NewPass, NewRole);
 
@@ -440,9 +455,14 @@ namespace FlowModel.ViewModels
                 {
                     if (SelectedUser is not null)
                     {
-                        var CRUD = new UserCRUD();
+                        if (User.Count(x => x.Role == "Администратор") > 1)
+                        {
+                            var CRUD = new UserCRUD();
 
-                        CRUD.Delete(SelectedUser);
+                            CRUD.Delete(SelectedUser);
+                        }
+                        else
+                            MessageBox.Show("Вы не можете удалить последнего зарегистрированного администратора", "Ошибка при удалении записи");
 
                         Advertisement();
                     }
@@ -525,7 +545,7 @@ namespace FlowModel.ViewModels
             {
                 return _AddEmpiricalCoef ??= new RelayCommand(x =>
                 {
-                    if (NameEmpiricalCoef != string.Empty && NameUnit is not null)
+                    if (NameEmpiricalCoef != string.Empty && NameEmpiricalCoef != "" && NameEmpiricalCoef != null && NameUnit is not null)
                     {
                         var varEmpiricalCoef = new EmpiricalCoef(NameEmpiricalCoef, NameUnit.ID_unit);
 
@@ -550,7 +570,7 @@ namespace FlowModel.ViewModels
                 return _UpdateEmpriricalCoef ??= new RelayCommand(x =>
                 {
 
-                    if (NameEmpiricalCoef != string.Empty && NameUnit is not null)
+                    if (NameEmpiricalCoef != string.Empty && NameEmpiricalCoef != "" && NameEmpiricalCoef != null && NameUnit is not null)
                     {
 
                         var varEmpiricalCoef = new EmpiricalCoef(SelectedEmpiricalCoefUser.ID_empirical_coef, NameEmpiricalCoef, NameUnit.ID_unit);
@@ -575,13 +595,19 @@ namespace FlowModel.ViewModels
             {
                 return _RemoveEmpiricalCoef ??= new RelayCommand(x =>
                 {
-                    if (NameEmpiricalCoef != string.Empty && NameUnit is not null)
+                    if (SelectedEmpiricalCoefUser is not null)
                     {
-                        var CRUD = new EmpiricalCoefCRUD();
+                        if(ValueEmpiricalCoef.FirstOrDefault(x => x.ID_empirical_coef == SelectedEmpiricalCoefUser.ID_empirical_coef) is null)
+                        {
+                            var CRUD = new EmpiricalCoefCRUD();
 
-                        var varEmpiricalCoef = new EmpiricalCoef(SelectedEmpiricalCoefUser.ID_empirical_coef, SelectedEmpiricalCoefUser.Name_empirical_coef, Unit.FirstOrDefault(x => x.Name_unit == SelectedEmpiricalCoefUser.Name_unit).ID_unit);
+                            var varEmpiricalCoef = new EmpiricalCoef(SelectedEmpiricalCoefUser.ID_empirical_coef, SelectedEmpiricalCoefUser.Name_empirical_coef, Unit.FirstOrDefault(x => x.Name_unit == SelectedEmpiricalCoefUser.Name_unit).ID_unit);
 
-                        CRUD.Delete(varEmpiricalCoef);
+                            CRUD.Delete(varEmpiricalCoef);
+                        }
+                        else
+                            MessageBox.Show("Выбранная запись используется в другой таблице. Вы не можете ее удалить.", "Ошибка при удалении записи");
+
 
                         Advertisement();
                     }
@@ -664,7 +690,7 @@ namespace FlowModel.ViewModels
             {
                 return _AddCharacteristicMaterial ??= new RelayCommand(x =>
                 {
-                    if (NameCharacteristicMaterial != string.Empty && NameUnitCharacteristic is not null)
+                    if (NameCharacteristicMaterial != string.Empty && NameCharacteristicMaterial != "" && NameCharacteristicMaterial != null && NameUnitCharacteristic is not null)
                     {
                         var varCharacteristicMaterial = new CharacteristicMaterial(NameCharacteristicMaterial, NameUnitCharacteristic.ID_unit);
 
@@ -689,7 +715,7 @@ namespace FlowModel.ViewModels
                 return _UpdateCharacteristicMaterial ??= new RelayCommand(x =>
                 {
 
-                    if (NameCharacteristicMaterial != string.Empty && NameUnitCharacteristic is not null)
+                    if (NameCharacteristicMaterial != string.Empty && NameCharacteristicMaterial != "" && NameCharacteristicMaterial != null && NameUnitCharacteristic is not null)
                     {
 
                         var varCharacteristicMaterial = new CharacteristicMaterial(SelectedCharacteristicMaterialUser.ID_characteristic, NameCharacteristicMaterial, NameUnitCharacteristic.ID_unit);
@@ -714,13 +740,18 @@ namespace FlowModel.ViewModels
             {
                 return _RemoveCharacteristicMaterial ??= new RelayCommand(x =>
                 {
-                    if (NameCharacteristicMaterial != string.Empty && NameUnitCharacteristic is not null)
+                    if (SelectedCharacteristicMaterialUser is not null)
                     {
-                        var CRUD = new CharacteristicMaterialCRUD();
+                        if(ValueCharacteristicMaterial.FirstOrDefault(x => x.ID_characteristic == SelectedCharacteristicMaterialUser.ID_characteristic) is null)
+                        {
+                            var CRUD = new CharacteristicMaterialCRUD();
 
-                        var varCharacteristicMaterial = new CharacteristicMaterial(SelectedCharacteristicMaterialUser.ID_characteristic, SelectedCharacteristicMaterialUser.Name_characteristic, Unit.FirstOrDefault(x => x.Name_unit == SelectedCharacteristicMaterialUser.Name_unit).ID_unit);
+                            var varCharacteristicMaterial = new CharacteristicMaterial(SelectedCharacteristicMaterialUser.ID_characteristic, SelectedCharacteristicMaterialUser.Name_characteristic, Unit.FirstOrDefault(x => x.Name_unit == SelectedCharacteristicMaterialUser.Name_unit).ID_unit);
 
-                        CRUD.Delete(varCharacteristicMaterial);
+                            CRUD.Delete(varCharacteristicMaterial);
+                        }
+                        else
+                            MessageBox.Show("Выбранная запись используется в другой таблице. Вы не можете ее удалить.", "Ошибка при удалении записи");
 
                         Advertisement();
                     }
@@ -810,7 +841,7 @@ namespace FlowModel.ViewModels
             {
                 return _AddCharacteristicMaterialValue ??= new RelayCommand(x =>
                 {
-                    if (ValueCharacteristic.ToString() != string.Empty && NameCharacteristicValue is not null && NameMaterialCharacteristic is not null)
+                    if (ValueCharacteristic.ToString() != string.Empty && ValueCharacteristic.ToString() != "" && ValueCharacteristic.ToString() != null && NameCharacteristicValue is not null && NameMaterialCharacteristic is not null)
                     {
                         var varCharacteristicMaterialValue = new ValueCharacteristicMaterial(NameMaterialCharacteristic.ID_material, NameCharacteristicValue.ID_characteristic, ValueCharacteristic);
 
@@ -835,7 +866,7 @@ namespace FlowModel.ViewModels
                 return _UpdateCharacteristicMaterialValue ??= new RelayCommand(x =>
                 {
 
-                    if (ValueCharacteristic.ToString() != string.Empty && NameCharacteristicValue is not null && NameMaterialCharacteristic is not null)
+                    if (ValueCharacteristic.ToString() != string.Empty && ValueCharacteristic.ToString() != "" && ValueCharacteristic.ToString() != null && NameCharacteristicValue is not null && NameMaterialCharacteristic is not null)
                     {
 
                         var varCharacteristicMaterialValue = new ValueCharacteristicMaterial(SelectedValueCharacteristicMaterialUser.Id, NameMaterialCharacteristic.ID_material, NameCharacteristicValue.ID_characteristic, ValueCharacteristic);
@@ -860,7 +891,8 @@ namespace FlowModel.ViewModels
             {
                 return _RemoveCharacteristicMaterialValue ??= new RelayCommand(x =>
                 {
-                    if (ValueCharacteristic.ToString() != string.Empty && NameCharacteristicValue is not null && NameMaterialCharacteristic is not null)
+                    //if (ValueCharacteristic.ToString() != string.Empty && NameCharacteristicValue is not null && NameMaterialCharacteristic is not null)
+                    if (SelectedValueCharacteristicMaterialUser is not null)
                     {
                         var CRUD = new ValueCharacteristicMaterialCRUD();
 
@@ -956,7 +988,7 @@ namespace FlowModel.ViewModels
             {
                 return _AddEmpiricalCoefValue ??= new RelayCommand(x =>
                 {
-                    if (ValueEmpiricalCoefMaterial.ToString() != string.Empty && NameMaterialEmpiricalCoef is not null && NameEmpiricalCoefValue is not null)
+                    if (ValueEmpiricalCoefMaterial.ToString() != string.Empty && ValueEmpiricalCoefMaterial.ToString() != "" && ValueEmpiricalCoefMaterial.ToString() != null && NameMaterialEmpiricalCoef is not null && NameEmpiricalCoefValue is not null)
                     {
                         var varEmpiricalCoefValue = new ValueEmpiricalCoef(NameMaterialEmpiricalCoef.ID_material, NameEmpiricalCoefValue.ID_empirical_coef, ValueEmpiricalCoefMaterial);
 
@@ -981,7 +1013,7 @@ namespace FlowModel.ViewModels
                 return _UpdateEmpiricalCoefValue ??= new RelayCommand(x =>
                 {
 
-                    if (ValueEmpiricalCoefMaterial.ToString() != string.Empty && NameMaterialEmpiricalCoef is not null && NameEmpiricalCoefValue is not null)
+                    if (ValueEmpiricalCoefMaterial.ToString() != string.Empty && ValueEmpiricalCoefMaterial.ToString() != "" && ValueEmpiricalCoefMaterial.ToString() != null && NameMaterialEmpiricalCoef is not null && NameEmpiricalCoefValue is not null)
                     {
                         var varEmpiricalCoefValue = new ValueEmpiricalCoef(SelectedValueEmpiricalCoefUser.ID, NameMaterialEmpiricalCoef.ID_material, NameEmpiricalCoefValue.ID_empirical_coef, ValueEmpiricalCoefMaterial);
 
@@ -1005,7 +1037,7 @@ namespace FlowModel.ViewModels
             {
                 return _RemoveEmpiricalCoefValue ??= new RelayCommand(x =>
                 {
-                    if (ValueEmpiricalCoefMaterial.ToString() != string.Empty && NameMaterialEmpiricalCoef is not null && NameEmpiricalCoefValue is not null)
+                    if (SelectedValueEmpiricalCoefUser is not null)
                     {
                         var CRUD = new ValueEmpiricalCoefCRUD();
 
