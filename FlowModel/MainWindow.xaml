@@ -1,4 +1,4 @@
-﻿<Window x:Class="FlowModel.MainWindow"
+﻿<Window x:Name="Window" x:Class="FlowModel.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -23,6 +23,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Menu Grid.Column="0" Style="{DynamicResource MaterialDesignMenu}">
+                        <MenuItem Command="{Binding ShowAuth}" CommandParameter="{Binding ElementName=Window}" Header="Сменить пользователя" FontSize="14" Height="28"/>
                         <MenuItem Header="О проекте" FontSize="14" Height="28"/>
                     </Menu>
                     <TextBlock Grid.Column="1" Margin="0 5 0 0" FontSize="14" Height="28" Text="Время счета"/>
@@ -136,8 +137,8 @@
 
                             <TextBlock Grid.Row="0" Margin="0 2 0 0" Text="Материал" Grid.Column="0"/>
 
-                            <ComboBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource MaterialDesignComboBox}">
-                                <ComboBoxItem Content="Полистирол" IsSelected="True"/>
+                            <ComboBox SelectedItem="{Binding SelectedMaterial}" ItemsSource="{Binding Materials}" DisplayMemberPath="Name_material"  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource MaterialDesignComboBox}">  
+                                
                             </ComboBox>
 
                             <TextBlock Margin="0 5 0 0" Grid.Row="1" Grid.Column="0" Text="Плотность"/>
@@ -400,6 +401,7 @@
                     <Button Command="{Binding Calc}" Margin="10 16 10 0" Content="Расчет" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
 
                     <Button Command="{Binding Export}" Margin="10 16 10 0" Content="Сохранить отчет" Style="{DynamicResource MaterialDesignFlatLightBgButton}"/>
+                    <Button Command="{Binding ShowAdmin}" Margin="10 16 10 0" Content="Тест" Style="{DynamicResource MaterialDesignFlatLightBgButton}"/>
 
                 </StackPanel>
 
