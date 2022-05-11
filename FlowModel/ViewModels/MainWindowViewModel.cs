@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using WPF_MVVM_Classes;
@@ -30,8 +31,6 @@ namespace FlowModel
 
             SelectedMaterial = Materials[0];
 
-            //FillBox();
-
             CalcMemory();
         }
 
@@ -44,7 +43,6 @@ namespace FlowModel
                     string prcName = Process.GetCurrentProcess().ProcessName;
                     var counter = new PerformanceCounter("Process", "Working Set - Private", prcName);
                     MemoryParam = (int)(counter.RawValue / (1024* 1024));
-                    //MemoryParam = (int)System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / 1024;
                 }
             });
         }
@@ -207,6 +205,23 @@ namespace FlowModel
             Time = Math.Round(OutputParameter.Time.TotalMilliseconds, 2).ToString();
         }
 
+        public void ProcessElement(DependencyObject element, StringBuilder sb)
+        {
+
+            if (element is TextBox)
+            {
+                if (Validation.GetHasError(element))
+                {
+                    sb.Append("ошибка:\r\n");
+                }
+            }
+
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
+            {
+                ProcessElement(VisualTreeHelper.GetChild(element, i), sb);
+            }
+        }
+
         private RelayCommand _Calc;
         public RelayCommand Calc
         {
@@ -214,7 +229,14 @@ namespace FlowModel
             {
                 return _Calc ??= new RelayCommand(x =>
                 {
-                    CallCalc();
+                    StringBuilder sb = new StringBuilder();
+                    ProcessElement((DependencyObject)x, sb);
+
+                    string message = sb.ToString();
+                    if (message == string.Empty)
+                        CallCalc();
+                    else
+                        MessageBox.Show("Проверьте корректность введенных значений", "Ошибка при валидации данных");
                 });
             }
         }
@@ -248,26 +270,6 @@ namespace FlowModel
                      _WindowViscosity.DataContext = _ViewModelViscosity;
                      _WindowViscosity.Show();
                  });
-            }
-        }
-
-        private AdminWindow? _AdminWindow = null;
-        private AdminWindowViewModel _AdminWindowViewModel;
-
-        private RelayCommand _ShowAdmin;
-
-        public RelayCommand ShowAdmin
-        {
-            get
-            {
-                return _ShowAdmin ??= new RelayCommand(x =>
-                {
-                    _AdminWindowViewModel = new AdminWindowViewModel();
-                    _AdminWindow = new AdminWindow();
-                    _AdminWindow.DataContext = _AdminWindowViewModel;
-                    _AdminWindow.Show();
-
-                });
             }
         }
 

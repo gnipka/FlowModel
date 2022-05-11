@@ -20,6 +20,11 @@ namespace FlowModel
             if (value == null || str == "")
                 return new ValidationResult(false,
                "Заполните поле");
+            else if (str.Contains(","))
+            {
+                return new ValidationResult(false,
+                "Введите значение через точку");
+            }
             else if (str[str.Length - 1] == '.' || str[str.Length - 1] == ',')
             {
                 return new ValidationResult(false,

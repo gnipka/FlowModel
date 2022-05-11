@@ -9,7 +9,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         mc:Ignorable="d"
         Title="Программный комплекс для исследования неизотермического течения аномально-вязких материалов" MinHeight="560" MinWidth="1070">
-    <Grid>
+    <Grid x:Name="Grid">
         <StackPanel>
             <Border Margin="0 1 0 0" BorderThickness="1" BorderBrush="{DynamicResource PrimaryHueDarkBrush}">
                 <Grid Grid.Row="0" >
@@ -398,10 +398,9 @@
 
                     </GroupBox>
 
-                    <Button Command="{Binding Calc}" Margin="10 16 10 0" Content="Расчет" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
+                    <Button Command="{Binding Calc}" CommandParameter="{Binding ElementName=Grid}" Margin="10 16 10 0" Content="Расчет" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
 
                     <Button Command="{Binding Export}" Margin="10 16 10 0" Content="Сохранить отчет" Style="{DynamicResource MaterialDesignFlatLightBgButton}"/>
-                    <Button Command="{Binding ShowAdmin}" Margin="10 16 10 0" Content="Тест" Style="{DynamicResource MaterialDesignFlatLightBgButton}"/>
 
                 </StackPanel>
 
