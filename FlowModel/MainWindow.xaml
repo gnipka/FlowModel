@@ -23,6 +23,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Menu Grid.Column="0" Style="{DynamicResource MaterialDesignMenu}">
+                        <MenuItem Command="{Binding ShowModel}" Header="2D модель" FontSize="14" Height="28"/>
                         <MenuItem Command="{Binding ShowAuth}" CommandParameter="{Binding ElementName=Window}" Header="Сменить пользователя" FontSize="14" Height="28"/>
                         <MenuItem Header="О проекте" FontSize="14" Height="28"/>
                     </Menu>

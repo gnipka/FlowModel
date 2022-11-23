@@ -1,7 +1,12 @@
 ﻿using FlowModel.CRUDInterface;
 using FlowModel.InteractionDB;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using SQLitePCL;
+using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using WPF_MVVM_Classes;
@@ -1074,6 +1079,50 @@ namespace FlowModel.ViewModels
 
                     ((Window)x).Hide();
                 });
+            }
+        }
+
+        private RelayCommand _Backup;
+
+        public RelayCommand Backup
+        {
+            get
+            {
+                return _Backup ??= new RelayCommand(x =>
+                {
+                    try
+                    {
+                        FlowModelContext context = new FlowModelContext();
+                        int num = context.ConnectionString.IndexOf('.');
+                        string backupConnection = context.ConnectionString.Insert(num, "Backup");
+
+                        //SQLiteConnection.CreateFile("FlowModelDBBackup.db");
+
+                        var backup = new SqliteConnection(backupConnection);
+                        using (var connection = new SqliteConnection(context.ConnectionString))
+                        {
+                            connection.Open();
+                            backup.Open();
+                            connection.BackupDatabase(backup);
+                        }
+
+                        var fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "FlowModelDBBackup.db");
+
+                        var fileNameFrom = Path.Combine(Environment.CurrentDirectory, "FlowModelDB.db");
+
+                        if (File.Exists(fileName))
+                        {
+                            File.Delete(fileName);
+                        }
+
+                        File.Copy(fileNameFrom, fileName);
+                        MessageBox.Show($"Резервное копирование прошло успешно. Файл расположен по пути - {fileName}", "Резервное копирование");
+                    }
+                    catch(Exception exc)
+                    {
+                        MessageBox.Show("При резервном копировании возникла ошибка", "Ошибка при создании резервного копирования");
+                    }
+                });                    
             }
         }
     }

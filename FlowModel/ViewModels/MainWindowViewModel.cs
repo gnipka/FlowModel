@@ -293,6 +293,22 @@ namespace FlowModel
             }
         }
 
+        private Model2D? _2DModel = null;
+
+        private RelayCommand _ShowModel;
+
+        public RelayCommand ShowModel
+        {
+            get
+            {
+                return _ShowModel ??= new RelayCommand(x =>
+                {
+                    _2DModel = new Model2D(VariableParameters.CoverSpeed);
+                    _2DModel.Show();
+                });
+            }
+        }
+
         private RelayCommand _Export;
 
         public RelayCommand Export

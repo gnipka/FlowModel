@@ -15,6 +15,7 @@
 
         <Menu Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Style="{DynamicResource MaterialDesignMenu}">
             <MenuItem Command="{Binding ShowAuth}" CommandParameter="{Binding ElementName=Window}" Header="Сменить пользователя" FontSize="14" Height="28"/>
+            <MenuItem Command="{Binding Backup}" Header="Резервное копирование" FontSize="14" Height="28"/>
             <MenuItem Header="О проекте" FontSize="14" Height="28"/>
         </Menu>
 
